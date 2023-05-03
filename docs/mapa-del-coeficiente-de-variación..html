@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>6.2 Análisis gráfico | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas</title>
+  <title>8.4 Mapa del coeficiente de variación. | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas</title>
   <meta name="description" content="Taller de instalación de capacidades en SAE." />
   <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="6.2 Análisis gráfico | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas" />
+  <meta property="og:title" content="8.4 Mapa del coeficiente de variación. | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Taller de instalación de capacidades en SAE." />
   <meta name="github-repo" content="psirusteam/HHS-Handbook" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="6.2 Análisis gráfico | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas" />
+  <meta name="twitter:title" content="8.4 Mapa del coeficiente de variación. | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas" />
   
   <meta name="twitter:description" content="Taller de instalación de capacidades en SAE." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="datos-de-la-encuesta.html"/>
-<link rel="next" href="modelo-para-la-varianza.html"/>
+<link rel="prev" href="mapa-de-pobreza-1.html"/>
+
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -231,56 +231,36 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="análisis-gráfico" class="section level2 hasAnchor" number="6.2">
-<h2><span class="header-section-number">6.2</span> Análisis gráfico<a href="análisis-gráfico.html#análisis-gráfico" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>El primer gráfico, <code>p1</code>, muestra una gráfica de dispersión de la variable <code>ln_sigma2</code> en función de la variable <code>pobreza</code>, con una línea suave que representa una estimación de la tendencia. El eje x está etiquetado como <em>pobreza</em>.</p>
-<p>El segundo gráfico, <code>p2</code>, muestra una gráfica de dispersión de la variable <code>ln_sigma2</code> en función de la variable <code>nd</code>, con una línea suave que representa una estimación de la tendencia. El eje x está etiquetado como <em>Tamaño de muestra</em>.</p>
-<p>El tercer gráfico, <code>p3</code>, muestra una gráfica de dispersión de la variable <code>ln_sigma2</code> en función del producto de <code>pobreza</code> y <code>nd</code>, con una línea suave que representa una estimación de la tendencia. El eje x está etiquetado como <em>Número de pobres</em>.</p>
-<p>El cuarto gráfico, <code>p4</code>, muestra una gráfica de dispersión de la variable <code>ln_sigma2</code> en función de la raíz cuadrada de la variable <code>pobreza</code>, con una línea suave que representa una estimación de la tendencia. El eje x está etiquetado como <em>Raiz cuadrada de pobreza</em>.</p>
-<p>En general, los gráficos estan diseñados para explorar la relación entre <code>ln_sigma2</code> y diferentes variables independientes, como <code>pobreza</code>, <code>nd</code>, y la raíz cuadrada de la pobreza. La elección de utilizar la función “loess” para suavizar las líneas en lugar de una línea recta puede ayudar a visualizar mejor las tendencias generales en los datos.</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="análisis-gráfico.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span>
-<span id="cb71-2"><a href="análisis-gráfico.html#cb71-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-3"><a href="análisis-gráfico.html#cb71-3" aria-hidden="true" tabindex="-1"></a><span class="co"># pobreza vs Ln_sigma2 #</span></span>
-<span id="cb71-4"><a href="análisis-gráfico.html#cb71-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-5"><a href="análisis-gráfico.html#cb71-5" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(baseFGV, <span class="fu">aes</span>(<span class="at">x =</span> pobreza, <span class="at">y =</span> ln_sigma2)) <span class="sc">+</span></span>
-<span id="cb71-6"><a href="análisis-gráfico.html#cb71-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb71-7"><a href="análisis-gráfico.html#cb71-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;loess&quot;</span>) <span class="sc">+</span></span>
-<span id="cb71-8"><a href="análisis-gráfico.html#cb71-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;pobreza&quot;</span>)</span>
-<span id="cb71-9"><a href="análisis-gráfico.html#cb71-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-10"><a href="análisis-gráfico.html#cb71-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Tamaño de muestra vs Ln_sigma2 #</span></span>
-<span id="cb71-11"><a href="análisis-gráfico.html#cb71-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-12"><a href="análisis-gráfico.html#cb71-12" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(baseFGV, <span class="fu">aes</span>(<span class="at">x =</span> nd, <span class="at">y =</span> ln_sigma2)) <span class="sc">+</span> </span>
-<span id="cb71-13"><a href="análisis-gráfico.html#cb71-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb71-14"><a href="análisis-gráfico.html#cb71-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;loess&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb71-15"><a href="análisis-gráfico.html#cb71-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Tamaño de muestra&quot;</span>)</span>
-<span id="cb71-16"><a href="análisis-gráfico.html#cb71-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-17"><a href="análisis-gráfico.html#cb71-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Número de pobres vs Ln_sigma2 #</span></span>
-<span id="cb71-18"><a href="análisis-gráfico.html#cb71-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-19"><a href="análisis-gráfico.html#cb71-19" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(baseFGV, </span>
-<span id="cb71-20"><a href="análisis-gráfico.html#cb71-20" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> pobreza <span class="sc">*</span> nd, <span class="at">y =</span> ln_sigma2)) <span class="sc">+</span> </span>
-<span id="cb71-21"><a href="análisis-gráfico.html#cb71-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb71-22"><a href="análisis-gráfico.html#cb71-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;loess&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb71-23"><a href="análisis-gráfico.html#cb71-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Número de pobres&quot;</span>)</span>
-<span id="cb71-24"><a href="análisis-gráfico.html#cb71-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-25"><a href="análisis-gráfico.html#cb71-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Raiz_pobreza vs Ln_sigma2 #</span></span>
-<span id="cb71-26"><a href="análisis-gráfico.html#cb71-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-27"><a href="análisis-gráfico.html#cb71-27" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(baseFGV, </span>
-<span id="cb71-28"><a href="análisis-gráfico.html#cb71-28" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">sqrt</span>(pobreza), <span class="at">y =</span> ln_sigma2)) <span class="sc">+</span> </span>
-<span id="cb71-29"><a href="análisis-gráfico.html#cb71-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb71-30"><a href="análisis-gráfico.html#cb71-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;loess&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb71-31"><a href="análisis-gráfico.html#cb71-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Raiz cuadrada de pobreza&quot;</span>)</span>
-<span id="cb71-32"><a href="análisis-gráfico.html#cb71-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-33"><a href="análisis-gráfico.html#cb71-33" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb71-34"><a href="análisis-gráfico.html#cb71-34" aria-hidden="true" tabindex="-1"></a>(p1 <span class="sc">|</span> p2) <span class="sc">/</span> (p3 <span class="sc">|</span> p4)</span></code></pre></div>
-<p><img src="03-D2S2_FGV_files/figure-html/unnamed-chunk-8-1.svg" width="672" /></p>
+<div id="mapa-del-coeficiente-de-variación." class="section level2 hasAnchor" number="8.4">
+<h2><span class="header-section-number">8.4</span> Mapa del coeficiente de variación.<a href="mapa-del-coeficiente-de-variación..html#mapa-del-coeficiente-de-variación." class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Ahora, se crea un segundo mapa temático (<code>tmap</code>) llamado <code>Mapa_cv</code>. Utiliza la misma estructura del primer mapa (mapa) creado anteriormente y agrega una capa utilizando la función <code>tm_polygons()</code>. El mapa representa la variable <code>Cv_pred</code>, utilizando una paleta de colores llamada “YlOrRd” y establece el título del mapa con el parámetro <code>title</code>. La función <code>tm_layout()</code> establece algunos parámetros de diseño del mapa, como la relación de aspecto (asp). Finalmente, el mapa Mapa_cv se muestra en la consola de R.</p>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb122-1"><a href="mapa-del-coeficiente-de-variación..html#cb122-1" aria-hidden="true" tabindex="-1"></a>Mapa_cv <span class="ot">&lt;-</span></span>
+<span id="cb122-2"><a href="mapa-del-coeficiente-de-variación..html#cb122-2" aria-hidden="true" tabindex="-1"></a>  mapa <span class="sc">+</span> <span class="fu">tm_polygons</span>(</span>
+<span id="cb122-3"><a href="mapa-del-coeficiente-de-variación..html#cb122-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">&quot;Cv_pred&quot;</span>),</span>
+<span id="cb122-4"><a href="mapa-del-coeficiente-de-variación..html#cb122-4" aria-hidden="true" tabindex="-1"></a>     <span class="at">title =</span> <span class="st">&quot;Mapa de pobreza(cv)&quot;</span>,</span>
+<span id="cb122-5"><a href="mapa-del-coeficiente-de-variación..html#cb122-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="st">&quot;YlOrRd&quot;</span>,</span>
+<span id="cb122-6"><a href="mapa-del-coeficiente-de-variación..html#cb122-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">colorNA =</span> <span class="st">&quot;white&quot;</span></span>
+<span id="cb122-7"><a href="mapa-del-coeficiente-de-variación..html#cb122-7" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> <span class="fu">tm_layout</span>(<span class="at">asp =</span> <span class="fl">2.5</span>)</span>
+<span id="cb122-8"><a href="mapa-del-coeficiente-de-variación..html#cb122-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb122-9"><a href="mapa-del-coeficiente-de-variación..html#cb122-9" aria-hidden="true" tabindex="-1"></a>Mapa_cv</span></code></pre></div>
+<p><img src="Recursos/D%C3%ADa3/Sesion1/0Recursos/Mapa_arcoseno_cv.PNG" width="500px" height="250px" style="display: block; margin: auto;" /></p>
+
 </div>
+<!-- </div> -->
+
+
+
+
+
+
+
             </section>
 
           </div>
         </div>
       </div>
-<a href="datos-de-la-encuesta.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="modelo-para-la-varianza.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="mapa-de-pobreza-1.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -311,7 +291,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/psirusteam/2021ASDA/03-D2S2_FGV.qmd",
+"link": "https://github.com/psirusteam/2021ASDA/05-D3S1_Fay_Herriot_arcosin.qmd",
 "text": "Edit"
 },
 "history": {

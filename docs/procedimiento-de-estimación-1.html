@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>6.2 Análisis gráfico | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas</title>
+  <title>8.1 Procedimiento de estimación | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas</title>
   <meta name="description" content="Taller de instalación de capacidades en SAE." />
   <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="6.2 Análisis gráfico | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas" />
+  <meta property="og:title" content="8.1 Procedimiento de estimación | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Taller de instalación de capacidades en SAE." />
   <meta name="github-repo" content="psirusteam/HHS-Handbook" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="6.2 Análisis gráfico | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas" />
+  <meta name="twitter:title" content="8.1 Procedimiento de estimación | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas" />
   
   <meta name="twitter:description" content="Taller de instalación de capacidades en SAE." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="datos-de-la-encuesta.html"/>
-<link rel="next" href="modelo-para-la-varianza.html"/>
+<link rel="prev" href="día-3---sesión-1--modelos-de-área---estimación-de-la-pobreza-y-la-transformación-arcoseno..html"/>
+<link rel="next" href="preparando-los-insumos-para-stan-1.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -231,56 +231,346 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="análisis-gráfico" class="section level2 hasAnchor" number="6.2">
-<h2><span class="header-section-number">6.2</span> Análisis gráfico<a href="análisis-gráfico.html#análisis-gráfico" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>El primer gráfico, <code>p1</code>, muestra una gráfica de dispersión de la variable <code>ln_sigma2</code> en función de la variable <code>pobreza</code>, con una línea suave que representa una estimación de la tendencia. El eje x está etiquetado como <em>pobreza</em>.</p>
-<p>El segundo gráfico, <code>p2</code>, muestra una gráfica de dispersión de la variable <code>ln_sigma2</code> en función de la variable <code>nd</code>, con una línea suave que representa una estimación de la tendencia. El eje x está etiquetado como <em>Tamaño de muestra</em>.</p>
-<p>El tercer gráfico, <code>p3</code>, muestra una gráfica de dispersión de la variable <code>ln_sigma2</code> en función del producto de <code>pobreza</code> y <code>nd</code>, con una línea suave que representa una estimación de la tendencia. El eje x está etiquetado como <em>Número de pobres</em>.</p>
-<p>El cuarto gráfico, <code>p4</code>, muestra una gráfica de dispersión de la variable <code>ln_sigma2</code> en función de la raíz cuadrada de la variable <code>pobreza</code>, con una línea suave que representa una estimación de la tendencia. El eje x está etiquetado como <em>Raiz cuadrada de pobreza</em>.</p>
-<p>En general, los gráficos estan diseñados para explorar la relación entre <code>ln_sigma2</code> y diferentes variables independientes, como <code>pobreza</code>, <code>nd</code>, y la raíz cuadrada de la pobreza. La elección de utilizar la función “loess” para suavizar las líneas en lugar de una línea recta puede ayudar a visualizar mejor las tendencias generales en los datos.</p>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="análisis-gráfico.html#cb71-1" aria-hidden="true" tabindex="-1"></a><span class="fu">theme_set</span>(<span class="fu">theme_bw</span>())</span>
-<span id="cb71-2"><a href="análisis-gráfico.html#cb71-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-3"><a href="análisis-gráfico.html#cb71-3" aria-hidden="true" tabindex="-1"></a><span class="co"># pobreza vs Ln_sigma2 #</span></span>
-<span id="cb71-4"><a href="análisis-gráfico.html#cb71-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-5"><a href="análisis-gráfico.html#cb71-5" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(baseFGV, <span class="fu">aes</span>(<span class="at">x =</span> pobreza, <span class="at">y =</span> ln_sigma2)) <span class="sc">+</span></span>
-<span id="cb71-6"><a href="análisis-gráfico.html#cb71-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb71-7"><a href="análisis-gráfico.html#cb71-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;loess&quot;</span>) <span class="sc">+</span></span>
-<span id="cb71-8"><a href="análisis-gráfico.html#cb71-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;pobreza&quot;</span>)</span>
-<span id="cb71-9"><a href="análisis-gráfico.html#cb71-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-10"><a href="análisis-gráfico.html#cb71-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Tamaño de muestra vs Ln_sigma2 #</span></span>
-<span id="cb71-11"><a href="análisis-gráfico.html#cb71-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-12"><a href="análisis-gráfico.html#cb71-12" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(baseFGV, <span class="fu">aes</span>(<span class="at">x =</span> nd, <span class="at">y =</span> ln_sigma2)) <span class="sc">+</span> </span>
-<span id="cb71-13"><a href="análisis-gráfico.html#cb71-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb71-14"><a href="análisis-gráfico.html#cb71-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;loess&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb71-15"><a href="análisis-gráfico.html#cb71-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Tamaño de muestra&quot;</span>)</span>
-<span id="cb71-16"><a href="análisis-gráfico.html#cb71-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-17"><a href="análisis-gráfico.html#cb71-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Número de pobres vs Ln_sigma2 #</span></span>
-<span id="cb71-18"><a href="análisis-gráfico.html#cb71-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-19"><a href="análisis-gráfico.html#cb71-19" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(baseFGV, </span>
-<span id="cb71-20"><a href="análisis-gráfico.html#cb71-20" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> pobreza <span class="sc">*</span> nd, <span class="at">y =</span> ln_sigma2)) <span class="sc">+</span> </span>
-<span id="cb71-21"><a href="análisis-gráfico.html#cb71-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb71-22"><a href="análisis-gráfico.html#cb71-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;loess&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb71-23"><a href="análisis-gráfico.html#cb71-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Número de pobres&quot;</span>)</span>
-<span id="cb71-24"><a href="análisis-gráfico.html#cb71-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-25"><a href="análisis-gráfico.html#cb71-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Raiz_pobreza vs Ln_sigma2 #</span></span>
-<span id="cb71-26"><a href="análisis-gráfico.html#cb71-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-27"><a href="análisis-gráfico.html#cb71-27" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(baseFGV, </span>
-<span id="cb71-28"><a href="análisis-gráfico.html#cb71-28" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">sqrt</span>(pobreza), <span class="at">y =</span> ln_sigma2)) <span class="sc">+</span> </span>
-<span id="cb71-29"><a href="análisis-gráfico.html#cb71-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb71-30"><a href="análisis-gráfico.html#cb71-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;loess&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb71-31"><a href="análisis-gráfico.html#cb71-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Raiz cuadrada de pobreza&quot;</span>)</span>
-<span id="cb71-32"><a href="análisis-gráfico.html#cb71-32" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb71-33"><a href="análisis-gráfico.html#cb71-33" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb71-34"><a href="análisis-gráfico.html#cb71-34" aria-hidden="true" tabindex="-1"></a>(p1 <span class="sc">|</span> p2) <span class="sc">/</span> (p3 <span class="sc">|</span> p4)</span></code></pre></div>
-<p><img src="03-D2S2_FGV_files/figure-html/unnamed-chunk-8-1.svg" width="672" /></p>
+<div id="procedimiento-de-estimación-1" class="section level2 hasAnchor" number="8.1">
+<h2><span class="header-section-number">8.1</span> Procedimiento de estimación<a href="procedimiento-de-estimación-1.html#procedimiento-de-estimación-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Lectura de la base de datos que resultó en el paso anterior y selección de las columnas de interés</p>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb107-1"><a href="procedimiento-de-estimación-1.html#cb107-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb107-2"><a href="procedimiento-de-estimación-1.html#cb107-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb107-3"><a href="procedimiento-de-estimación-1.html#cb107-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb107-4"><a href="procedimiento-de-estimación-1.html#cb107-4" aria-hidden="true" tabindex="-1"></a>base_FH <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;Recursos/Día3/Sesion1/Data/base_FH_2018.rds&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb107-5"><a href="procedimiento-de-estimación-1.html#cb107-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(dam2,                            <span class="do">## id dominios</span></span>
+<span id="cb107-6"><a href="procedimiento-de-estimación-1.html#cb107-6" aria-hidden="true" tabindex="-1"></a>            pobreza,</span>
+<span id="cb107-7"><a href="procedimiento-de-estimación-1.html#cb107-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">T_pobreza =</span> <span class="fu">asin</span>(<span class="fu">sqrt</span>(pobreza)),  <span class="do">## creando zd</span></span>
+<span id="cb107-8"><a href="procedimiento-de-estimación-1.html#cb107-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">n_effec =</span> n_eff_FGV,              <span class="do">## n efectivo</span></span>
+<span id="cb107-9"><a href="procedimiento-de-estimación-1.html#cb107-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">varhat =</span> <span class="dv">1</span><span class="sc">/</span>(<span class="dv">4</span><span class="sc">*</span>n_effec)            <span class="do">## varianza para zd</span></span>
+<span id="cb107-10"><a href="procedimiento-de-estimación-1.html#cb107-10" aria-hidden="true" tabindex="-1"></a>            )</span></code></pre></div>
+<p>Lectura de las covariables, las cuales son obtenidas previamente. Dado la diferencia entre las escalas de las variables es necesario hacer un ajuste a estas.</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb108-1"><a href="procedimiento-de-estimación-1.html#cb108-1" aria-hidden="true" tabindex="-1"></a>statelevel_predictors_df <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;Recursos/Día3/Sesion1/Data/statelevel_predictors_df_dam2.rds&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb108-2"><a href="procedimiento-de-estimación-1.html#cb108-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_at</span>(<span class="at">.vars =</span> <span class="fu">c</span>(<span class="st">&quot;luces_nocturnas&quot;</span>,</span>
+<span id="cb108-3"><a href="procedimiento-de-estimación-1.html#cb108-3" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;cubrimiento_cultivo&quot;</span>,</span>
+<span id="cb108-4"><a href="procedimiento-de-estimación-1.html#cb108-4" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;cubrimiento_urbano&quot;</span>,</span>
+<span id="cb108-5"><a href="procedimiento-de-estimación-1.html#cb108-5" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;modificacion_humana&quot;</span>,</span>
+<span id="cb108-6"><a href="procedimiento-de-estimación-1.html#cb108-6" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;accesibilidad_hospitales&quot;</span>,</span>
+<span id="cb108-7"><a href="procedimiento-de-estimación-1.html#cb108-7" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;accesibilidad_hosp_caminado&quot;</span>),</span>
+<span id="cb108-8"><a href="procedimiento-de-estimación-1.html#cb108-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">function</span>(x) <span class="fu">as.numeric</span>(<span class="fu">scale</span>(x)))</span></code></pre></div>
+<p>Uniendo las dos bases de datos.</p>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb109-1"><a href="procedimiento-de-estimación-1.html#cb109-1" aria-hidden="true" tabindex="-1"></a>base_FH <span class="ot">&lt;-</span> <span class="fu">full_join</span>(base_FH, statelevel_predictors_df, <span class="at">by =</span> <span class="st">&quot;dam2&quot;</span> )</span>
+<span id="cb109-2"><a href="procedimiento-de-estimación-1.html#cb109-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tba</span>(base_FH[,<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>] <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">10</span>))</span></code></pre></div>
+<table class="table table-striped lightable-classic" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: Arial Narrow; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+dam2
+</th>
+<th style="text-align:right;">
+pobreza
+</th>
+<th style="text-align:right;">
+T_pobreza
+</th>
+<th style="text-align:right;">
+n_effec
+</th>
+<th style="text-align:right;">
+varhat
+</th>
+<th style="text-align:right;">
+modificacion_humana
+</th>
+<th style="text-align:right;">
+accesibilidad_hospitales
+</th>
+<th style="text-align:right;">
+accesibilidad_hosp_caminado
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+00101
+</td>
+<td style="text-align:right;">
+0.2225
+</td>
+<td style="text-align:right;">
+0.4912
+</td>
+<td style="text-align:right;">
+332.3384
+</td>
+<td style="text-align:right;">
+0.0008
+</td>
+<td style="text-align:right;">
+3.6127
+</td>
+<td style="text-align:right;">
+-1.1835
+</td>
+<td style="text-align:right;">
+-1.5653
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+00201
+</td>
+<td style="text-align:right;">
+0.1822
+</td>
+<td style="text-align:right;">
+0.4409
+</td>
+<td style="text-align:right;">
+28.0165
+</td>
+<td style="text-align:right;">
+0.0089
+</td>
+<td style="text-align:right;">
+-0.0553
+</td>
+<td style="text-align:right;">
+0.4449
+</td>
+<td style="text-align:right;">
+0.2100
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+00206
+</td>
+<td style="text-align:right;">
+0.3366
+</td>
+<td style="text-align:right;">
+0.6190
+</td>
+<td style="text-align:right;">
+44.7971
+</td>
+<td style="text-align:right;">
+0.0056
+</td>
+<td style="text-align:right;">
+0.5157
+</td>
+<td style="text-align:right;">
+-0.1468
+</td>
+<td style="text-align:right;">
+-0.1811
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+00301
+</td>
+<td style="text-align:right;">
+0.4266
+</td>
+<td style="text-align:right;">
+0.7117
+</td>
+<td style="text-align:right;">
+125.6580
+</td>
+<td style="text-align:right;">
+0.0020
+</td>
+<td style="text-align:right;">
+0.1364
+</td>
+<td style="text-align:right;">
+0.5744
+</td>
+<td style="text-align:right;">
+1.1660
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+00302
+</td>
+<td style="text-align:right;">
+0.4461
+</td>
+<td style="text-align:right;">
+0.7314
+</td>
+<td style="text-align:right;">
+261.0000
+</td>
+<td style="text-align:right;">
+0.0010
+</td>
+<td style="text-align:right;">
+-0.5103
+</td>
+<td style="text-align:right;">
+0.2531
+</td>
+<td style="text-align:right;">
+1.0880
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+00303
+</td>
+<td style="text-align:right;">
+0.5587
+</td>
+<td style="text-align:right;">
+0.8442
+</td>
+<td style="text-align:right;">
+75.7938
+</td>
+<td style="text-align:right;">
+0.0033
+</td>
+<td style="text-align:right;">
+-0.6591
+</td>
+<td style="text-align:right;">
+0.6249
+</td>
+<td style="text-align:right;">
+1.2229
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+00304
+</td>
+<td style="text-align:right;">
+0.5406
+</td>
+<td style="text-align:right;">
+0.8261
+</td>
+<td style="text-align:right;">
+154.4069
+</td>
+<td style="text-align:right;">
+0.0016
+</td>
+<td style="text-align:right;">
+-0.5573
+</td>
+<td style="text-align:right;">
+1.4586
+</td>
+<td style="text-align:right;">
+2.7337
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+00401
+</td>
+<td style="text-align:right;">
+0.3359
+</td>
+<td style="text-align:right;">
+0.6182
+</td>
+<td style="text-align:right;">
+105.4750
+</td>
+<td style="text-align:right;">
+0.0024
+</td>
+<td style="text-align:right;">
+0.3979
+</td>
+<td style="text-align:right;">
+-0.0833
+</td>
+<td style="text-align:right;">
+-0.4490
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+00402
+</td>
+<td style="text-align:right;">
+0.1496
+</td>
+<td style="text-align:right;">
+0.3972
+</td>
+<td style="text-align:right;">
+59.6357
+</td>
+<td style="text-align:right;">
+0.0042
+</td>
+<td style="text-align:right;">
+-0.3661
+</td>
+<td style="text-align:right;">
+-0.0114
+</td>
+<td style="text-align:right;">
+-0.2863
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+00403
+</td>
+<td style="text-align:right;">
+0.4644
+</td>
+<td style="text-align:right;">
+0.7498
+</td>
+<td style="text-align:right;">
+197.2378
+</td>
+<td style="text-align:right;">
+0.0013
+</td>
+<td style="text-align:right;">
+-1.0446
+</td>
+<td style="text-align:right;">
+0.4542
+</td>
+<td style="text-align:right;">
+0.5702
+</td>
+</tr>
+</tbody>
+</table>
+<p>Seleccionando las covariables para el modelo.</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb110-1"><a href="procedimiento-de-estimación-1.html#cb110-1" aria-hidden="true" tabindex="-1"></a>names_cov <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb110-2"><a href="procedimiento-de-estimación-1.html#cb110-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;sexo2&quot;</span> ,</span>
+<span id="cb110-3"><a href="procedimiento-de-estimación-1.html#cb110-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;anoest2&quot;</span> ,</span>
+<span id="cb110-4"><a href="procedimiento-de-estimación-1.html#cb110-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;anoest3&quot;</span>,</span>
+<span id="cb110-5"><a href="procedimiento-de-estimación-1.html#cb110-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;anoest4&quot;</span>,</span>
+<span id="cb110-6"><a href="procedimiento-de-estimación-1.html#cb110-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;edad2&quot;</span> ,</span>
+<span id="cb110-7"><a href="procedimiento-de-estimación-1.html#cb110-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;edad3&quot;</span> ,</span>
+<span id="cb110-8"><a href="procedimiento-de-estimación-1.html#cb110-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;edad4&quot;</span> ,</span>
+<span id="cb110-9"><a href="procedimiento-de-estimación-1.html#cb110-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;edad5&quot;</span> ,</span>
+<span id="cb110-10"><a href="procedimiento-de-estimación-1.html#cb110-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;tasa_desocupacion&quot;</span> ,</span>
+<span id="cb110-11"><a href="procedimiento-de-estimación-1.html#cb110-11" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;luces_nocturnas&quot;</span> ,</span>
+<span id="cb110-12"><a href="procedimiento-de-estimación-1.html#cb110-12" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;cubrimiento_cultivo&quot;</span> ,</span>
+<span id="cb110-13"><a href="procedimiento-de-estimación-1.html#cb110-13" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;alfabeta&quot;</span></span>
+<span id="cb110-14"><a href="procedimiento-de-estimación-1.html#cb110-14" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="datos-de-la-encuesta.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="modelo-para-la-varianza.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="día-3---sesión-1--modelos-de-área---estimación-de-la-pobreza-y-la-transformación-arcoseno..html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="preparando-los-insumos-para-stan-1.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -311,7 +601,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/psirusteam/2021ASDA/03-D2S2_FGV.qmd",
+"link": "https://github.com/psirusteam/2021ASDA/05-D3S1_Fay_Herriot_arcosin.qmd",
 "text": "Edit"
 },
 "history": {
