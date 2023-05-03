@@ -46,6 +46,8 @@ output:
 
 # Día 1 - Sesión 1- No dejar a nadie atrás - ODS y la Agenda 2030 
 
-[Ver presentación](https://github.com/psirusteam/2023DOMsae/blob/main/Recursos/D%C3%ADa1/Sesion1/SAE-0%2C-SDGs-and-Surveys.pdf)
+[Objetivos de Desarrollo Sostenible y limitaciones de las encuesta](https://github.com/psirusteam/2023DOMsae/blob/main/Recursos/D%C3%ADa1/Sesion1/SAE-0%2C-SDGs-and-Surveys.pdf)
 
+# Día 1 - Sesión 2-  Limitaciones de las encuestas de hogares 
 
+[Objetivos de Desarrollo Sostenible y limitaciones de las encuesta](https://github.com/psirusteam/2023DOMsae/blob/main/Recursos/D%C3%ADa1/Sesion1/SAE-0%2C-SDGs-and-Surveys.pdf)

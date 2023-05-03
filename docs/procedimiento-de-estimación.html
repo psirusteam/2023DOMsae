@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>3.3 Instalación de rgee | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas</title>
+  <title>7.1 Procedimiento de estimación | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas</title>
   <meta name="description" content="Taller de instalación de capacidades en SAE." />
   <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="3.3 Instalación de rgee | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas" />
+  <meta property="og:title" content="7.1 Procedimiento de estimación | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Taller de instalación de capacidades en SAE." />
   <meta name="github-repo" content="psirusteam/HHS-Handbook" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="3.3 Instalación de rgee | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas" />
+  <meta name="twitter:title" content="7.1 Procedimiento de estimación | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas" />
   
   <meta name="twitter:description" content="Taller de instalación de capacidades en SAE." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="google-earth-eninge.html"/>
-<link rel="next" href="censos-de-población-y-vivienda.html"/>
+<link rel="prev" href="día-2---sesión-3--modelo-de-fay-herriot---estimación-de-la-pobreza.html"/>
+<link rel="next" href="preparando-los-insumos-para-stan.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -221,103 +221,47 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="instalación-de-rgee" class="section level2 hasAnchor" number="3.3">
-<h2><span class="header-section-number">3.3</span> Instalación de rgee<a href="instalación-de-rgee.html#instalación-de-rgee" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<ul>
-<li><p>Descargar e instalar anaconda o conda. (<a href="https://www.anaconda.com/products/individual" class="uri">https://www.anaconda.com/products/individual</a>)</p></li>
-<li><p>Abrir Anaconda prompt y configurar ambiente de trabajo (ambiente python rgee_py) con las siguientes sentencias:</p></li>
-</ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="instalación-de-rgee.html#cb1-1" aria-hidden="true" tabindex="-1"></a>conda create <span class="op">-</span>n rgee_py python<span class="op">=</span><span class="fl">3.9</span></span>
-<span id="cb1-2"><a href="instalación-de-rgee.html#cb1-2" aria-hidden="true" tabindex="-1"></a>activate rgee_py</span>
-<span id="cb1-3"><a href="instalación-de-rgee.html#cb1-3" aria-hidden="true" tabindex="-1"></a>pip install google<span class="op">-</span>api<span class="op">-</span>python<span class="op">-</span>client</span>
-<span id="cb1-4"><a href="instalación-de-rgee.html#cb1-4" aria-hidden="true" tabindex="-1"></a>pip install earthengine<span class="op">-</span>api</span>
-<span id="cb1-5"><a href="instalación-de-rgee.html#cb1-5" aria-hidden="true" tabindex="-1"></a>pip install numpy</span></code></pre></div>
-<ul>
-<li>Listar los ambientes de Python disponibles en anaconda prompt</li>
-</ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="instalación-de-rgee.html#cb2-1" aria-hidden="true" tabindex="-1"></a>conda env <span class="bu">list</span></span></code></pre></div>
-<ul>
-<li>Una vez identificado la ruta del ambiente ambiente rgee_py definirla en R (<strong>no se debe olvidar cambiar \ por /</strong>).</li>
-<li>Instalar <code>reticulate</code> y <code>rgee</code>, cargar paquetes para procesamiento espacial y configurar el ambiente de trabajo como sigue:</li>
-</ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="instalación-de-rgee.html#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(reticulate) <span class="co"># Conexión con Python</span></span>
-<span id="cb3-2"><a href="instalación-de-rgee.html#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rgee) <span class="co"># Conexión con Google Earth Engine</span></span>
-<span id="cb3-3"><a href="instalación-de-rgee.html#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf) <span class="co"># Paquete para manejar datos geográficos</span></span>
-<span id="cb3-4"><a href="instalación-de-rgee.html#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr) <span class="co"># Paquete para procesamiento de datos</span></span>
-<span id="cb3-5"><a href="instalación-de-rgee.html#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
-<span id="cb3-6"><a href="instalación-de-rgee.html#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="instalación-de-rgee.html#cb3-7" aria-hidden="true" tabindex="-1"></a>rgee_environment_dir <span class="ot">=</span> <span class="st">&quot;C://Users//sguerrero//Anaconda3//envs//rgee_py//python.exe&quot;</span></span>
-<span id="cb3-8"><a href="instalación-de-rgee.html#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="instalación-de-rgee.html#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Configurar python (Algunas veces no es detectado y se debe reiniciar R)</span></span>
-<span id="cb3-10"><a href="instalación-de-rgee.html#cb3-10" aria-hidden="true" tabindex="-1"></a>reticulate<span class="sc">::</span><span class="fu">use_python</span>(rgee_environment_dir, <span class="at">required=</span>T)</span>
-<span id="cb3-11"><a href="instalación-de-rgee.html#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-12"><a href="instalación-de-rgee.html#cb3-12" aria-hidden="true" tabindex="-1"></a>rgee<span class="sc">::</span><span class="fu">ee_install_set_pyenv</span>(<span class="at">py_path =</span> rgee_environment_dir, <span class="at">py_env =</span> <span class="st">&quot;rgee_py&quot;</span>)</span>
-<span id="cb3-13"><a href="instalación-de-rgee.html#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="instalación-de-rgee.html#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">RETICULATE_PYTHON =</span> rgee_environment_dir)</span>
-<span id="cb3-15"><a href="instalación-de-rgee.html#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setenv</span>(<span class="at">EARTHENGINE_PYTHON =</span> rgee_environment_dir)</span></code></pre></div>
-<ul>
-<li>Una vez configurado el ambiente puede iniciarlizarse una sesión de Google Earth Engine como sigue:</li>
-</ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="instalación-de-rgee.html#cb4-1" aria-hidden="true" tabindex="-1"></a>rgee<span class="sc">::</span><span class="fu">ee_Initialize</span>(<span class="at">drive =</span> T)</span></code></pre></div>
-<p><img src="Recursos/D%C3%ADa1/Sesion2/0Recursos/Figura1_001.PNG" width="538" /></p>
-<p><strong>Notas:</strong></p>
-<ul>
-<li><p>Se debe inicializar cada sesión con el comando <code>rgee::ee_Initialize(drive = T)</code>.</p></li>
-<li><p>Los comandos de javascript que invoquen métodos con “.” se sustituyen por signo peso ($), por ejemplo:</p></li>
-</ul>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="instalación-de-rgee.html#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ee.ImageCollection</span>()<span class="fu">.filterDate</span>()  <span class="co"># Javascript</span></span>
-<span id="cb5-2"><a href="instalación-de-rgee.html#cb5-2" aria-hidden="true" tabindex="-1"></a>ee<span class="sc">$</span><span class="fu">ImageCollection</span>()<span class="sc">$</span><span class="fu">filterDate</span>()  <span class="co"># R</span></span></code></pre></div>
-<div id="descargar-información-satelital" class="section level3 hasAnchor" number="3.3.1">
-<h3><span class="header-section-number">3.3.1</span> Descargar información satelital<a href="instalación-de-rgee.html#descargar-información-satelital" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<ul>
-<li><strong>Paso 1</strong>: disponer de los shapefile</li>
-</ul>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="instalación-de-rgee.html#cb6-1" aria-hidden="true" tabindex="-1"></a>shape <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">&quot;Recursos/Día1/Sesion2/Shape/DOM.shp&quot;</span>)</span>
-<span id="cb6-2"><a href="instalación-de-rgee.html#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(shape[<span class="st">&quot;geometry&quot;</span>])</span></code></pre></div>
-<p><img src="01-D1S3_Imagenes_Satelitales_files/figure-html/unnamed-chunk-9-1.svg" width="672" /></p>
-<ul>
-<li><strong>Paso 2</strong>: Seleccionar el archivo de imágenes que desea procesar, para nuestro ejemplo <strong>luces nocturnas</strong>.</li>
-</ul>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="instalación-de-rgee.html#cb7-1" aria-hidden="true" tabindex="-1"></a>luces <span class="ot">&lt;-</span> ee<span class="sc">$</span><span class="fu">ImageCollection</span>(<span class="st">&quot;NOAA/DMSP-OLS/NIGHTTIME_LIGHTS&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb7-2"><a href="instalación-de-rgee.html#cb7-2" aria-hidden="true" tabindex="-1"></a>  ee<span class="sc">$</span>ImageCollection<span class="sc">$</span><span class="fu">filterDate</span>(<span class="st">&quot;2013-01-01&quot;</span>, <span class="st">&quot;2014-01-01&quot;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb7-3"><a href="instalación-de-rgee.html#cb7-3" aria-hidden="true" tabindex="-1"></a>  ee<span class="sc">$</span>ImageCollection<span class="sc">$</span><span class="fu">map</span>(<span class="cf">function</span>(x) x<span class="sc">$</span><span class="fu">select</span>(<span class="st">&quot;stable_lights&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb7-4"><a href="instalación-de-rgee.html#cb7-4" aria-hidden="true" tabindex="-1"></a>  ee<span class="sc">$</span>ImageCollection<span class="sc">$</span><span class="fu">toBands</span>()</span></code></pre></div>
-<ul>
-<li><strong>Paso 3</strong>: Descargar la información</li>
-</ul>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="instalación-de-rgee.html#cb8-1" aria-hidden="true" tabindex="-1"></a>shape_luces <span class="ot">&lt;-</span> <span class="fu">map</span>(<span class="fu">unique</span>(shape<span class="sc">$</span>dam),</span>
-<span id="cb8-2"><a href="instalación-de-rgee.html#cb8-2" aria-hidden="true" tabindex="-1"></a>                 <span class="sc">~</span><span class="fu">tryCatch</span>(<span class="fu">ee_extract</span>(</span>
-<span id="cb8-3"><a href="instalación-de-rgee.html#cb8-3" aria-hidden="true" tabindex="-1"></a>                   <span class="at">x =</span> luces,</span>
-<span id="cb8-4"><a href="instalación-de-rgee.html#cb8-4" aria-hidden="true" tabindex="-1"></a>                   <span class="at">y =</span> shape[<span class="st">&quot;dam&quot;</span>] <span class="sc">%&gt;%</span> <span class="fu">filter</span>(dam <span class="sc">==</span> .x),</span>
-<span id="cb8-5"><a href="instalación-de-rgee.html#cb8-5" aria-hidden="true" tabindex="-1"></a>                   ee<span class="sc">$</span>Reducer<span class="sc">$</span><span class="fu">mean</span>(),</span>
-<span id="cb8-6"><a href="instalación-de-rgee.html#cb8-6" aria-hidden="true" tabindex="-1"></a>                   <span class="at">sf =</span> <span class="cn">FALSE</span></span>
-<span id="cb8-7"><a href="instalación-de-rgee.html#cb8-7" aria-hidden="true" tabindex="-1"></a>                 ) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">dam =</span> .x),</span>
-<span id="cb8-8"><a href="instalación-de-rgee.html#cb8-8" aria-hidden="true" tabindex="-1"></a>                 <span class="at">error =</span> <span class="cf">function</span>(e)<span class="fu">data.frame</span>(<span class="at">dam =</span> .x)))</span>
-<span id="cb8-9"><a href="instalación-de-rgee.html#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-10"><a href="instalación-de-rgee.html#cb8-10" aria-hidden="true" tabindex="-1"></a>shape_luces <span class="sc">%&lt;&gt;%</span> <span class="fu">bind_rows</span>()</span>
-<span id="cb8-11"><a href="instalación-de-rgee.html#cb8-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-12"><a href="instalación-de-rgee.html#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="fu">tba</span>(shape_luces, <span class="at">cap =</span> <span class="st">&quot;Promedio de luces nocturnasa&quot;</span>)</span></code></pre></div>
-<p>Repetir la rutina para:</p>
-<ul>
-<li><p>Tipo de suelo: <strong>crops-coverfraction</strong> (Porcentaje de cubrimiento cultivos) y <strong>urban-coverfraction</strong> (Porcentaje de cobertura urbana) disponibles en <a href="https://developers.google.com/earth-engine/datasets/catalog/COGTMNICUS_Landcover_100m_Proba-V-C3_Global#description" class="uri">https://developers.google.com/earth-engine/datasets/catalog/COGTMNICUS_Landcover_100m_Proba-V-C3_Global#description</a></p></li>
-<li><p>Tiempo de viaje al hospital o clínica más cercana (<strong>accessibility</strong>) y tiempo de viaje al hospital o clínica más cercana utilizando transporte no motorizado (<strong>accessibility_walking_only</strong>) información disponible en <a href="https://develoGTMs.google.com/earth-engine/datasets/catalog/Oxford_MAP_accessibility_to_healthcare_2019" class="uri">https://develoGTMs.google.com/earth-engine/datasets/catalog/Oxford_MAP_accessibility_to_healthcare_2019</a></p></li>
-<li><p>Modificación humana, donde se consideran los asentamiento humano, la agricultura, el transporte, la minería y producción de energía e infraestructura eléctrica. En el siguiente link encuentra la información satelital <a href="https://develoGTMs.google.com/earth-engine/datasets/catalog/CSP_HM_GlobalHumanModification#description" class="uri">https://develoGTMs.google.com/earth-engine/datasets/catalog/CSP_HM_GlobalHumanModification#description</a></p></li>
-<li><p><strong>Paso 4</strong> consolidar la información.</p></li>
-</ul>
-<table class="table table-striped lightable-classic" style="margin-left: auto; margin-right: auto; font-family: Arial Narrow; margin-left: auto; margin-right: auto;">
+<div id="procedimiento-de-estimación" class="section level2 hasAnchor" number="7.1">
+<h2><span class="header-section-number">7.1</span> Procedimiento de estimación<a href="procedimiento-de-estimación.html#procedimiento-de-estimación" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Este código utiliza las librerías <code>tidyverse</code> y <code>magrittr</code> para procesamiento y analizar datos.</p>
+<p>La función <code>readRDS()</code> es utilizada para cargar un archivo de datos en formato RDS, que contiene las estimaciones directas y la varianza suvizada para la proporción de personas en condición de pobreza correspondientes al año 2018. Luego, se utiliza el operador <code>%&gt;%</code> de la librería <code>magrittr</code> para encadenar la selección de las columnas de interés, que corresponden a los nombres <code>dam2</code>, <code>nd</code>, <code>pobreza</code>, <code>vardir</code> y <code>hat_var</code>.</p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb80-1"><a href="procedimiento-de-estimación.html#cb80-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb80-2"><a href="procedimiento-de-estimación.html#cb80-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb80-3"><a href="procedimiento-de-estimación.html#cb80-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb80-4"><a href="procedimiento-de-estimación.html#cb80-4" aria-hidden="true" tabindex="-1"></a>base_FH <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;Recursos/Día2/Sesion3/Data/base_FH_2018.rds&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb80-5"><a href="procedimiento-de-estimación.html#cb80-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(dam2, nd,  pobreza, vardir, hat_var)</span></code></pre></div>
+<p>Lectura de las covariables, las cuales son obtenidas previamente. Dado la diferencia entre las escalas de las variables es necesario hacer un ajuste a estas.</p>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb81-1"><a href="procedimiento-de-estimación.html#cb81-1" aria-hidden="true" tabindex="-1"></a>statelevel_predictors_df <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;Recursos/Día2/Sesion3/Data/statelevel_predictors_df_dam2.rds&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb81-2"><a href="procedimiento-de-estimación.html#cb81-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_at</span>(<span class="at">.vars =</span> <span class="fu">c</span>(<span class="st">&quot;luces_nocturnas&quot;</span>,</span>
+<span id="cb81-3"><a href="procedimiento-de-estimación.html#cb81-3" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;cubrimiento_cultivo&quot;</span>,</span>
+<span id="cb81-4"><a href="procedimiento-de-estimación.html#cb81-4" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;cubrimiento_urbano&quot;</span>,</span>
+<span id="cb81-5"><a href="procedimiento-de-estimación.html#cb81-5" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;modificacion_humana&quot;</span>,</span>
+<span id="cb81-6"><a href="procedimiento-de-estimación.html#cb81-6" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;accesibilidad_hospitales&quot;</span>,</span>
+<span id="cb81-7"><a href="procedimiento-de-estimación.html#cb81-7" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;accesibilidad_hosp_caminado&quot;</span>),</span>
+<span id="cb81-8"><a href="procedimiento-de-estimación.html#cb81-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">function</span>(x) <span class="fu">as.numeric</span>(<span class="fu">scale</span>(x)))</span></code></pre></div>
+<p>Ahora, se realiza una unión completa (<code>full_join</code>) entre el conjunto de datos <code>base_FH</code> y los predictores <code>statelevel_predictors_df</code> utilizando la variable <code>dam2</code> como clave de unión.</p>
+<p>Se utiliza la función tba() para imprimir las primeras 10 filas y 8 columnas del conjunto de datos resultante de la unión anterior.</p>
+<p>La unión completa (<code>full_join</code>) combina los datos de ambos conjuntos, manteniendo todas las filas de ambos, y llenando con valores faltantes (NA) en caso de no encontrar coincidencias en la variable de unión (dam2 en este caso).</p>
+<p>La función <code>tba()</code> imprime una tabla en formato HTML en la consola de R que muestra las primeras 10 filas y 8 columnas del conjunto de datos resultante de la unión.</p>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb82-1"><a href="procedimiento-de-estimación.html#cb82-1" aria-hidden="true" tabindex="-1"></a>base_FH <span class="ot">&lt;-</span> <span class="fu">full_join</span>(base_FH, statelevel_predictors_df, <span class="at">by =</span> <span class="st">&quot;dam2&quot;</span> )</span>
+<span id="cb82-2"><a href="procedimiento-de-estimación.html#cb82-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tba</span>(base_FH[<span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>])</span></code></pre></div>
+<table class="table table-striped lightable-classic" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: Arial Narrow; width: auto !important; margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
 <th style="text-align:left;">
-dam
+dam2
 </th>
 <th style="text-align:right;">
-luces_nocturnas
+nd
 </th>
 <th style="text-align:right;">
-cubrimiento_cultivo
+pobreza
 </th>
 <th style="text-align:right;">
-cubrimiento_urbano
+vardir
+</th>
+<th style="text-align:right;">
+hat_var
 </th>
 <th style="text-align:right;">
 modificacion_humana
@@ -333,276 +277,275 @@ accesibilidad_hosp_caminado
 <tbody>
 <tr>
 <td style="text-align:left;">
-02
+00101
 </td>
 <td style="text-align:right;">
-97.27735
+6796
 </td>
 <td style="text-align:right;">
-107.10243
+0.2225
 </td>
 <td style="text-align:right;">
-100.28394
+0.0004
 </td>
 <td style="text-align:right;">
-111.01645
+0.0004
 </td>
 <td style="text-align:right;">
-112.25437
+3.6127
 </td>
 <td style="text-align:right;">
-109.66652
+-1.1835
+</td>
+<td style="text-align:right;">
+-1.5653
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-03
+00201
 </td>
 <td style="text-align:right;">
-94.36142
+531
 </td>
 <td style="text-align:right;">
-97.71126
+0.1822
 </td>
 <td style="text-align:right;">
-96.32667
+0.0004
 </td>
 <td style="text-align:right;">
-96.29454
+0.0039
 </td>
 <td style="text-align:right;">
-100.55525
+-0.0553
 </td>
 <td style="text-align:right;">
-105.35470
+0.4449
+</td>
+<td style="text-align:right;">
+0.2100
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-04
+00206
 </td>
 <td style="text-align:right;">
-96.53042
+230
 </td>
 <td style="text-align:right;">
-95.73335
+0.3366
 </td>
 <td style="text-align:right;">
-96.55354
+0.0031
 </td>
 <td style="text-align:right;">
-98.67362
+0.0041
 </td>
 <td style="text-align:right;">
-102.77860
+0.5157
 </td>
 <td style="text-align:right;">
-103.78255
+-0.1468
+</td>
+<td style="text-align:right;">
+-0.1811
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-05
+00301
 </td>
 <td style="text-align:right;">
-91.61138
+666
 </td>
 <td style="text-align:right;">
-98.91270
+0.4266
 </td>
 <td style="text-align:right;">
-93.17994
+0.0043
 </td>
 <td style="text-align:right;">
-95.16236
+0.0050
 </td>
 <td style="text-align:right;">
-97.72809
+0.1364
 </td>
 <td style="text-align:right;">
-95.59357
+0.5744
+</td>
+<td style="text-align:right;">
+1.1660
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-01
+00302
 </td>
 <td style="text-align:right;">
-97.65958
+261
 </td>
 <td style="text-align:right;">
-86.79795
+0.4461
 </td>
 <td style="text-align:right;">
-106.90397
+0.0014
 </td>
 <td style="text-align:right;">
-82.34083
+0.0029
 </td>
 <td style="text-align:right;">
-89.53466
+-0.5103
 </td>
 <td style="text-align:right;">
-87.11064
+0.2531
+</td>
+<td style="text-align:right;">
+1.0880
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-06
+00303
 </td>
 <td style="text-align:right;">
-100.52567
+566
 </td>
 <td style="text-align:right;">
-107.21708
+0.5587
 </td>
 <td style="text-align:right;">
-99.96448
+0.0142
 </td>
 <td style="text-align:right;">
-104.95498
+0.0075
 </td>
 <td style="text-align:right;">
-94.75524
+-0.6591
 </td>
 <td style="text-align:right;">
-95.69942
+0.6249
+</td>
+<td style="text-align:right;">
+1.2229
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-08
+00304
 </td>
 <td style="text-align:right;">
-94.54495
+412
 </td>
 <td style="text-align:right;">
-103.38473
+0.5406
 </td>
 <td style="text-align:right;">
-93.84241
+0.0116
 </td>
 <td style="text-align:right;">
-102.73169
+0.0042
 </td>
 <td style="text-align:right;">
-98.74441
+-0.5573
 </td>
 <td style="text-align:right;">
-101.96155
+1.4586
+</td>
+<td style="text-align:right;">
+2.7337
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-09
+00401
 </td>
 <td style="text-align:right;">
-96.82438
+1219
 </td>
 <td style="text-align:right;">
-91.41961
+0.3359
 </td>
 <td style="text-align:right;">
-97.18788
+0.0010
 </td>
 <td style="text-align:right;">
-92.96846
+0.0042
 </td>
 <td style="text-align:right;">
-91.28395
+0.3979
 </td>
 <td style="text-align:right;">
-90.46557
+-0.0833
+</td>
+<td style="text-align:right;">
+-0.4490
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-30
+00402
 </td>
 <td style="text-align:right;">
-95.68487
+172
 </td>
 <td style="text-align:right;">
-91.78986
+0.1496
 </td>
 <td style="text-align:right;">
-93.93370
+0.0007
 </td>
 <td style="text-align:right;">
-96.83847
+0.0047
 </td>
 <td style="text-align:right;">
-98.54392
+-0.3661
 </td>
 <td style="text-align:right;">
-98.93543
+-0.0114
+</td>
+<td style="text-align:right;">
+-0.2863
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-10
+00403
 </td>
 <td style="text-align:right;">
-92.18900
+309
 </td>
 <td style="text-align:right;">
-98.33939
+0.4644
 </td>
 <td style="text-align:right;">
-94.53840
+0.0015
 </td>
 <td style="text-align:right;">
-97.45111
+0.0031
 </td>
 <td style="text-align:right;">
-108.54346
+-1.0446
 </td>
 <td style="text-align:right;">
-107.34596
+0.4542
+</td>
+<td style="text-align:right;">
+0.5702
 </td>
 </tr>
 </tbody>
 </table>
-<p>Los resultados se muestran en los siguientes mapas</p>
-</div>
-<div id="luces-nocturnas" class="section level3 hasAnchor" number="3.3.2">
-<h3><span class="header-section-number">3.3.2</span> Luces nocturnas<a href="instalación-de-rgee.html#luces-nocturnas" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><img src="Recursos/D%C3%ADa1/Sesion2/0Recursos/Figura8_000_lights.png" width="500px" height="350px" style="display: block; margin: auto;" /></p>
-<p><img src="01-D1S3_Imagenes_Satelitales_files/figure-html/unnamed-chunk-15-1.svg" width="850px" height="550px" style="display: block; margin: auto;" /></p>
-</div>
-<div id="cubrimiento-cultivos" class="section level3 hasAnchor" number="3.3.3">
-<h3><span class="header-section-number">3.3.3</span> Cubrimiento cultivos<a href="instalación-de-rgee.html#cubrimiento-cultivos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><img src="Recursos/D%C3%ADa1/Sesion2/0Recursos/Figura7_000_cubrimiento_cultivo.png" width="500px" height="350px" style="display: block; margin: auto;" /></p>
-<p><img src="01-D1S3_Imagenes_Satelitales_files/figure-html/unnamed-chunk-17-1.svg" width="850px" height="550px" style="display: block; margin: auto;" /></p>
-</div>
-<div id="cubrimiento-urbanos" class="section level3 hasAnchor" number="3.3.4">
-<h3><span class="header-section-number">3.3.4</span> Cubrimiento urbanos<a href="instalación-de-rgee.html#cubrimiento-urbanos" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><img src="Recursos/D%C3%ADa1/Sesion2/0Recursos/Figura6_000_cubrimiento_urbano.png" width="500px" height="350px" style="display: block; margin: auto;" /></p>
-<p><img src="01-D1S3_Imagenes_Satelitales_files/figure-html/unnamed-chunk-19-1.svg" width="850px" height="550px" style="display: block; margin: auto;" /></p>
-</div>
-<div id="modificación-humana" class="section level3 hasAnchor" number="3.3.5">
-<h3><span class="header-section-number">3.3.5</span> Modificación humana<a href="instalación-de-rgee.html#modificación-humana" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><img src="Recursos/D%C3%ADa1/Sesion2/0Recursos/Figura3_000_modificacion_humana.png" width="500px" height="350px" style="display: block; margin: auto;" /></p>
-<p><img src="01-D1S3_Imagenes_Satelitales_files/figure-html/unnamed-chunk-21-1.svg" width="850px" height="550px" style="display: block; margin: auto;" /></p>
-</div>
-<div id="tiempo-promedio-al-hospital" class="section level3 hasAnchor" number="3.3.6">
-<h3><span class="header-section-number">3.3.6</span> Tiempo promedio al hospital<a href="instalación-de-rgee.html#tiempo-promedio-al-hospital" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><img src="Recursos/D%C3%ADa1/Sesion2/0Recursos/Figura5_000_accesibilidad_hosp.png" width="500px" height="350px" style="display: block; margin: auto;" /></p>
-<p><img src="01-D1S3_Imagenes_Satelitales_files/figure-html/unnamed-chunk-23-1.svg" width="850px" height="550px" style="display: block; margin: auto;" /></p>
-</div>
-<div id="tiempo-promedio-al-hospital-en-vehiculo-no-motorizado" class="section level3 hasAnchor" number="3.3.7">
-<h3><span class="header-section-number">3.3.7</span> Tiempo promedio al hospital en vehiculo no motorizado<a href="instalación-de-rgee.html#tiempo-promedio-al-hospital-en-vehiculo-no-motorizado" class="anchor-section" aria-label="Anchor link to header"></a></h3>
-<p><img src="Recursos/D%C3%ADa1/Sesion2/0Recursos/Figura4_000_accesibilidad_hosp_caminado.png" width="500px" height="350px" style="display: block; margin: auto;" /></p>
-<p><img src="01-D1S3_Imagenes_Satelitales_files/figure-html/unnamed-chunk-25-1.svg" width="850px" height="550px" style="display: block; margin: auto;" /></p>
-</div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb83-1"><a href="procedimiento-de-estimación.html#cb83-1" aria-hidden="true" tabindex="-1"></a><span class="co"># View(base_FH)</span></span></code></pre></div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="google-earth-eninge.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="censos-de-población-y-vivienda.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="día-2---sesión-3--modelo-de-fay-herriot---estimación-de-la-pobreza.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="preparando-los-insumos-para-stan.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -633,7 +576,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/psirusteam/2021ASDA/01-D1S3_Imagenes_Satelitales.qmd",
+"link": "https://github.com/psirusteam/2021ASDA/04-D2S3_Fay_Herriot_normal.qmd",
 "text": "Edit"
 },
 "history": {
