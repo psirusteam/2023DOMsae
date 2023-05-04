@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>7.4 Validación de los resultados. | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas</title>
+  <title>10.4 Procedimiento de estimación | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas</title>
   <meta name="description" content="Taller de instalación de capacidades en SAE." />
   <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="7.4 Validación de los resultados. | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas" />
+  <meta property="og:title" content="10.4 Procedimiento de estimación | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Taller de instalación de capacidades en SAE." />
   <meta name="github-repo" content="psirusteam/HHS-Handbook" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="7.4 Validación de los resultados. | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas" />
+  <meta name="twitter:title" content="10.4 Procedimiento de estimación | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas" />
   
   <meta name="twitter:description" content="Taller de instalación de capacidades en SAE." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="proceso-de-benchmark.html"/>
-<link rel="next" href="mapa-de-pobreza.html"/>
+<link rel="prev" href="estimación-de-la-informalidad-laboral-con-un-modelo-de-área-con-tranformación-arcoseno..html"/>
+<link rel="next" href="preparando-los-insumos-para-stan-4.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -266,39 +266,341 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="validación-de-los-resultados." class="section level2 hasAnchor" number="7.4">
-<h2><span class="header-section-number">7.4</span> Validación de los resultados.<a href="validación-de-los-resultados..html#validación-de-los-resultados." class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Este código junta las estimaciones del modelo con pesos de benchmarking con los valores observados y sintéticos, y luego resume las estimaciones combinadas para compararlas con la estimación directa obtenida anteriormente.</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="validación-de-los-resultados..html#cb105-1" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> estimacionesBench <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(</span>
-<span id="cb105-2"><a href="validación-de-los-resultados..html#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb105-3"><a href="validación-de-los-resultados..html#cb105-3" aria-hidden="true" tabindex="-1"></a>data_dir <span class="sc">%&gt;%</span> <span class="fu">select</span>(dam2, thetaSyn, thetaFH),</span>
-<span id="cb105-4"><a href="validación-de-los-resultados..html#cb105-4" aria-hidden="true" tabindex="-1"></a>data_syn <span class="sc">%&gt;%</span> <span class="fu">select</span>(dam2, thetaSyn, thetaFH))) <span class="sc">%&gt;%</span> </span>
-<span id="cb105-5"><a href="validación-de-los-resultados..html#cb105-5" aria-hidden="true" tabindex="-1"></a><span class="fu">group_by</span>(region) <span class="sc">%&gt;%</span> </span>
-<span id="cb105-6"><a href="validación-de-los-resultados..html#cb105-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(<span class="at">thetaSyn =</span> <span class="fu">sum</span>(W_i <span class="sc">*</span> thetaSyn),</span>
-<span id="cb105-7"><a href="validación-de-los-resultados..html#cb105-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">thetaFH =</span> <span class="fu">sum</span>(W_i <span class="sc">*</span> theta_pred),</span>
-<span id="cb105-8"><a href="validación-de-los-resultados..html#cb105-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">theta_RBench =</span> <span class="fu">sum</span>(W_i <span class="sc">*</span> theta_pred_RBench)</span>
-<span id="cb105-9"><a href="validación-de-los-resultados..html#cb105-9" aria-hidden="true" tabindex="-1"></a>          ) <span class="sc">%&gt;%</span>   </span>
-<span id="cb105-10"><a href="validación-de-los-resultados..html#cb105-10" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(directoDam, <span class="at">by =</span> <span class="st">&quot;region&quot;</span>)  <span class="sc">%&gt;%</span> </span>
-<span id="cb105-11"><a href="validación-de-los-resultados..html#cb105-11" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>())</span>
-<span id="cb105-12"><a href="validación-de-los-resultados..html#cb105-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb105-13"><a href="validación-de-los-resultados..html#cb105-13" aria-hidden="true" tabindex="-1"></a>temp <span class="sc">%&lt;&gt;%</span> <span class="fu">gather</span>(<span class="at">key =</span> <span class="st">&quot;Metodo&quot;</span>,<span class="at">value =</span> <span class="st">&quot;Estimacion&quot;</span>,</span>
-<span id="cb105-14"><a href="validación-de-los-resultados..html#cb105-14" aria-hidden="true" tabindex="-1"></a>                <span class="sc">-</span>id, <span class="sc">-</span>region, <span class="sc">-</span>theta_dir_upp, <span class="sc">-</span>theta_dir_low)</span>
-<span id="cb105-15"><a href="validación-de-los-resultados..html#cb105-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb105-16"><a href="validación-de-los-resultados..html#cb105-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> temp, <span class="fu">aes</span>(<span class="at">x =</span> id, <span class="at">y =</span> Estimacion, <span class="at">shape =</span> Metodo)) <span class="sc">+</span></span>
-<span id="cb105-17"><a href="validación-de-los-resultados..html#cb105-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> Metodo), <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb105-18"><a href="validación-de-los-resultados..html#cb105-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> theta_dir_low), <span class="at">linetype  =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb105-19"><a href="validación-de-los-resultados..html#cb105-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> theta_dir_upp),  <span class="at">linetype  =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb105-20"><a href="validación-de-los-resultados..html#cb105-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="dv">10</span>) <span class="sc">+</span> </span>
-<span id="cb105-21"><a href="validación-de-los-resultados..html#cb105-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;&quot;</span>, <span class="at">x =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
-<p><img src="04-D2S3_Fay_Herriot_normal_files/figure-html/unnamed-chunk-29-1.svg" width="672" /></p>
+<div id="procedimiento-de-estimación-4" class="section level2 hasAnchor" number="10.4">
+<h2><span class="header-section-number">10.4</span> Procedimiento de estimación<a href="procedimiento-de-estimación-4.html#procedimiento-de-estimación-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Lectura de la base de datos que resultó en el paso anterior y selección de las columnas de interés</p>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb174-1"><a href="procedimiento-de-estimación-4.html#cb174-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb174-2"><a href="procedimiento-de-estimación-4.html#cb174-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(magrittr)</span>
+<span id="cb174-3"><a href="procedimiento-de-estimación-4.html#cb174-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb174-4"><a href="procedimiento-de-estimación-4.html#cb174-4" aria-hidden="true" tabindex="-1"></a>base_FH <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;Recursos/Día3/Sesion3/Data/base_FH.rds&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb174-5"><a href="procedimiento-de-estimación-4.html#cb174-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(dam2,                            <span class="do">## id dominios</span></span>
+<span id="cb174-6"><a href="procedimiento-de-estimación-4.html#cb174-6" aria-hidden="true" tabindex="-1"></a>            Rd,</span>
+<span id="cb174-7"><a href="procedimiento-de-estimación-4.html#cb174-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">T_pobreza =</span> <span class="fu">asin</span>(<span class="fu">sqrt</span>(Rd)),      <span class="do">## creando zd</span></span>
+<span id="cb174-8"><a href="procedimiento-de-estimación-4.html#cb174-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">n_effec =</span> n_eff_FGV,             <span class="do">## n efectivo</span></span>
+<span id="cb174-9"><a href="procedimiento-de-estimación-4.html#cb174-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">varhat =</span> <span class="dv">1</span><span class="sc">/</span>(<span class="dv">4</span><span class="sc">*</span>n_effec)           <span class="do">## varianza para zd</span></span>
+<span id="cb174-10"><a href="procedimiento-de-estimación-4.html#cb174-10" aria-hidden="true" tabindex="-1"></a>            )</span></code></pre></div>
+<p>Lectura de las covariables, las cuales son obtenidas previamente. Dado la diferencia entre las escalas de las variables es necesario hacer un ajuste a estas.</p>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb175-1"><a href="procedimiento-de-estimación-4.html#cb175-1" aria-hidden="true" tabindex="-1"></a>statelevel_predictors_df <span class="ot">&lt;-</span> <span class="fu">readRDS</span>(<span class="st">&quot;Recursos/Día3/Sesion3/Data/statelevel_predictors_df_dam2.rds&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb175-2"><a href="procedimiento-de-estimación-4.html#cb175-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate_at</span>(<span class="at">.vars =</span> <span class="fu">c</span>(<span class="st">&quot;luces_nocturnas&quot;</span>,</span>
+<span id="cb175-3"><a href="procedimiento-de-estimación-4.html#cb175-3" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;cubrimiento_cultivo&quot;</span>,</span>
+<span id="cb175-4"><a href="procedimiento-de-estimación-4.html#cb175-4" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;cubrimiento_urbano&quot;</span>,</span>
+<span id="cb175-5"><a href="procedimiento-de-estimación-4.html#cb175-5" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;modificacion_humana&quot;</span>,</span>
+<span id="cb175-6"><a href="procedimiento-de-estimación-4.html#cb175-6" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;accesibilidad_hospitales&quot;</span>,</span>
+<span id="cb175-7"><a href="procedimiento-de-estimación-4.html#cb175-7" aria-hidden="true" tabindex="-1"></a>                      <span class="st">&quot;accesibilidad_hosp_caminado&quot;</span>),</span>
+<span id="cb175-8"><a href="procedimiento-de-estimación-4.html#cb175-8" aria-hidden="true" tabindex="-1"></a>            <span class="cf">function</span>(x) <span class="fu">as.numeric</span>(<span class="fu">scale</span>(x))) <span class="sc">%&gt;%</span> </span>
+<span id="cb175-9"><a href="procedimiento-de-estimación-4.html#cb175-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">dam2 =</span> <span class="fu">str_sub</span>(dam2,<span class="dv">2</span>,<span class="dv">5</span>))</span></code></pre></div>
+<p>Uniendo las dos bases de datos.</p>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb176-1"><a href="procedimiento-de-estimación-4.html#cb176-1" aria-hidden="true" tabindex="-1"></a>base_FH <span class="ot">&lt;-</span> <span class="fu">full_join</span>(base_FH, statelevel_predictors_df, <span class="at">by =</span> <span class="st">&quot;dam2&quot;</span> )</span>
+<span id="cb176-2"><a href="procedimiento-de-estimación-4.html#cb176-2" aria-hidden="true" tabindex="-1"></a><span class="fu">tba</span>(base_FH[,<span class="dv">1</span><span class="sc">:</span><span class="dv">8</span>] <span class="sc">%&gt;%</span> <span class="fu">head</span>(<span class="dv">10</span>))</span></code></pre></div>
+<table class="table table-striped lightable-classic" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: Arial Narrow; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+dam2
+</th>
+<th style="text-align:right;">
+Rd
+</th>
+<th style="text-align:right;">
+T_pobreza
+</th>
+<th style="text-align:right;">
+n_effec
+</th>
+<th style="text-align:right;">
+varhat
+</th>
+<th style="text-align:right;">
+modificacion_humana
+</th>
+<th style="text-align:right;">
+accesibilidad_hospitales
+</th>
+<th style="text-align:right;">
+accesibilidad_hosp_caminado
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0101
+</td>
+<td style="text-align:right;">
+0.4147
+</td>
+<td style="text-align:right;">
+0.6996
+</td>
+<td style="text-align:right;">
+492.9681
+</td>
+<td style="text-align:right;">
+0.0005
+</td>
+<td style="text-align:right;">
+3.6127
+</td>
+<td style="text-align:right;">
+-1.1835
+</td>
+<td style="text-align:right;">
+-1.5653
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3201
+</td>
+<td style="text-align:right;">
+0.4233
+</td>
+<td style="text-align:right;">
+0.7083
+</td>
+<td style="text-align:right;">
+469.5114
+</td>
+<td style="text-align:right;">
+0.0005
+</td>
+<td style="text-align:right;">
+2.7794
+</td>
+<td style="text-align:right;">
+-1.1311
+</td>
+<td style="text-align:right;">
+-1.4114
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2501
+</td>
+<td style="text-align:right;">
+0.4108
+</td>
+<td style="text-align:right;">
+0.6957
+</td>
+<td style="text-align:right;">
+489.5639
+</td>
+<td style="text-align:right;">
+0.0005
+</td>
+<td style="text-align:right;">
+1.4723
+</td>
+<td style="text-align:right;">
+-0.9237
+</td>
+<td style="text-align:right;">
+-1.0018
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3203
+</td>
+<td style="text-align:right;">
+0.4858
+</td>
+<td style="text-align:right;">
+0.7712
+</td>
+<td style="text-align:right;">
+382.5577
+</td>
+<td style="text-align:right;">
+0.0007
+</td>
+<td style="text-align:right;">
+1.3957
+</td>
+<td style="text-align:right;">
+-0.8956
+</td>
+<td style="text-align:right;">
+-0.6852
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3202
+</td>
+<td style="text-align:right;">
+0.4221
+</td>
+<td style="text-align:right;">
+0.7072
+</td>
+<td style="text-align:right;">
+228.1662
+</td>
+<td style="text-align:right;">
+0.0011
+</td>
+<td style="text-align:right;">
+3.2182
+</td>
+<td style="text-align:right;">
+-1.1432
+</td>
+<td style="text-align:right;">
+-1.3703
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1101
+</td>
+<td style="text-align:right;">
+0.3788
+</td>
+<td style="text-align:right;">
+0.6630
+</td>
+<td style="text-align:right;">
+252.8274
+</td>
+<td style="text-align:right;">
+0.0010
+</td>
+<td style="text-align:right;">
+0.1812
+</td>
+<td style="text-align:right;">
+-0.3456
+</td>
+<td style="text-align:right;">
+0.2598
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3206
+</td>
+<td style="text-align:right;">
+0.3968
+</td>
+<td style="text-align:right;">
+0.6814
+</td>
+<td style="text-align:right;">
+155.8470
+</td>
+<td style="text-align:right;">
+0.0016
+</td>
+<td style="text-align:right;">
+2.8725
+</td>
+<td style="text-align:right;">
+-1.1422
+</td>
+<td style="text-align:right;">
+-1.3920
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+0901
+</td>
+<td style="text-align:right;">
+0.5236
+</td>
+<td style="text-align:right;">
+0.8090
+</td>
+<td style="text-align:right;">
+190.0700
+</td>
+<td style="text-align:right;">
+0.0013
+</td>
+<td style="text-align:right;">
+0.7267
+</td>
+<td style="text-align:right;">
+-0.9136
+</td>
+<td style="text-align:right;">
+-0.9395
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1301
+</td>
+<td style="text-align:right;">
+0.4899
+</td>
+<td style="text-align:right;">
+0.7753
+</td>
+<td style="text-align:right;">
+172.8174
+</td>
+<td style="text-align:right;">
+0.0014
+</td>
+<td style="text-align:right;">
+0.9296
+</td>
+<td style="text-align:right;">
+-0.8801
+</td>
+<td style="text-align:right;">
+-0.9322
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2101
+</td>
+<td style="text-align:right;">
+0.4522
+</td>
+<td style="text-align:right;">
+0.7376
+</td>
+<td style="text-align:right;">
+99.0789
+</td>
+<td style="text-align:right;">
+0.0025
+</td>
+<td style="text-align:right;">
+1.4404
+</td>
+<td style="text-align:right;">
+-0.9892
+</td>
+<td style="text-align:right;">
+-1.0458
+</td>
+</tr>
+</tbody>
+</table>
+<p>Seleccionando las covariables para el modelo.</p>
+<div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb177-1"><a href="procedimiento-de-estimación-4.html#cb177-1" aria-hidden="true" tabindex="-1"></a>names_cov <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb177-2"><a href="procedimiento-de-estimación-4.html#cb177-2" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;sexo2&quot;</span> ,</span>
+<span id="cb177-3"><a href="procedimiento-de-estimación-4.html#cb177-3" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;tasa_desocupacion&quot;</span> ,</span>
+<span id="cb177-4"><a href="procedimiento-de-estimación-4.html#cb177-4" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;luces_nocturnas&quot;</span> ,</span>
+<span id="cb177-5"><a href="procedimiento-de-estimación-4.html#cb177-5" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;cubrimiento_cultivo&quot;</span> ,</span>
+<span id="cb177-6"><a href="procedimiento-de-estimación-4.html#cb177-6" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;modificacion_humana&quot;</span>,</span>
+<span id="cb177-7"><a href="procedimiento-de-estimación-4.html#cb177-7" aria-hidden="true" tabindex="-1"></a>  <span class="st">&quot;alfabeta&quot;</span></span>
+<span id="cb177-8"><a href="procedimiento-de-estimación-4.html#cb177-8" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="proceso-de-benchmark.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="mapa-de-pobreza.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="estimación-de-la-informalidad-laboral-con-un-modelo-de-área-con-tranformación-arcoseno..html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="preparando-los-insumos-para-stan-4.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -329,7 +631,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/psirusteam/2021ASDA/04-D2S3_Fay_Herriot_normal.qmd",
+"link": "https://github.com/psirusteam/2021ASDA/08-D3S3_Mercado_de_trabajo.qmd",
 "text": "Edit"
 },
 "history": {

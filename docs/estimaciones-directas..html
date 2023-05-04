@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>7.4 Validación de los resultados. | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas</title>
+  <title>10.1 Estimaciones directas. | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas</title>
   <meta name="description" content="Taller de instalación de capacidades en SAE." />
   <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="7.4 Validación de los resultados. | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas" />
+  <meta property="og:title" content="10.1 Estimaciones directas. | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Taller de instalación de capacidades en SAE." />
   <meta name="github-repo" content="psirusteam/HHS-Handbook" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="7.4 Validación de los resultados. | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas" />
+  <meta name="twitter:title" content="10.1 Estimaciones directas. | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas" />
   
   <meta name="twitter:description" content="Taller de instalación de capacidades en SAE." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="proceso-de-benchmark.html"/>
-<link rel="next" href="mapa-de-pobreza.html"/>
+<link rel="prev" href="día-3---sesión-3--modelos-de-área---estimación-de-la-informalidad-laboral..html"/>
+<link rel="next" href="función-generalizada-de-varianza.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -266,39 +266,427 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="validación-de-los-resultados." class="section level2 hasAnchor" number="7.4">
-<h2><span class="header-section-number">7.4</span> Validación de los resultados.<a href="validación-de-los-resultados..html#validación-de-los-resultados." class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Este código junta las estimaciones del modelo con pesos de benchmarking con los valores observados y sintéticos, y luego resume las estimaciones combinadas para compararlas con la estimación directa obtenida anteriormente.</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="validación-de-los-resultados..html#cb105-1" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> estimacionesBench <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(</span>
-<span id="cb105-2"><a href="validación-de-los-resultados..html#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb105-3"><a href="validación-de-los-resultados..html#cb105-3" aria-hidden="true" tabindex="-1"></a>data_dir <span class="sc">%&gt;%</span> <span class="fu">select</span>(dam2, thetaSyn, thetaFH),</span>
-<span id="cb105-4"><a href="validación-de-los-resultados..html#cb105-4" aria-hidden="true" tabindex="-1"></a>data_syn <span class="sc">%&gt;%</span> <span class="fu">select</span>(dam2, thetaSyn, thetaFH))) <span class="sc">%&gt;%</span> </span>
-<span id="cb105-5"><a href="validación-de-los-resultados..html#cb105-5" aria-hidden="true" tabindex="-1"></a><span class="fu">group_by</span>(region) <span class="sc">%&gt;%</span> </span>
-<span id="cb105-6"><a href="validación-de-los-resultados..html#cb105-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(<span class="at">thetaSyn =</span> <span class="fu">sum</span>(W_i <span class="sc">*</span> thetaSyn),</span>
-<span id="cb105-7"><a href="validación-de-los-resultados..html#cb105-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">thetaFH =</span> <span class="fu">sum</span>(W_i <span class="sc">*</span> theta_pred),</span>
-<span id="cb105-8"><a href="validación-de-los-resultados..html#cb105-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">theta_RBench =</span> <span class="fu">sum</span>(W_i <span class="sc">*</span> theta_pred_RBench)</span>
-<span id="cb105-9"><a href="validación-de-los-resultados..html#cb105-9" aria-hidden="true" tabindex="-1"></a>          ) <span class="sc">%&gt;%</span>   </span>
-<span id="cb105-10"><a href="validación-de-los-resultados..html#cb105-10" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(directoDam, <span class="at">by =</span> <span class="st">&quot;region&quot;</span>)  <span class="sc">%&gt;%</span> </span>
-<span id="cb105-11"><a href="validación-de-los-resultados..html#cb105-11" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>())</span>
-<span id="cb105-12"><a href="validación-de-los-resultados..html#cb105-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb105-13"><a href="validación-de-los-resultados..html#cb105-13" aria-hidden="true" tabindex="-1"></a>temp <span class="sc">%&lt;&gt;%</span> <span class="fu">gather</span>(<span class="at">key =</span> <span class="st">&quot;Metodo&quot;</span>,<span class="at">value =</span> <span class="st">&quot;Estimacion&quot;</span>,</span>
-<span id="cb105-14"><a href="validación-de-los-resultados..html#cb105-14" aria-hidden="true" tabindex="-1"></a>                <span class="sc">-</span>id, <span class="sc">-</span>region, <span class="sc">-</span>theta_dir_upp, <span class="sc">-</span>theta_dir_low)</span>
-<span id="cb105-15"><a href="validación-de-los-resultados..html#cb105-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb105-16"><a href="validación-de-los-resultados..html#cb105-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> temp, <span class="fu">aes</span>(<span class="at">x =</span> id, <span class="at">y =</span> Estimacion, <span class="at">shape =</span> Metodo)) <span class="sc">+</span></span>
-<span id="cb105-17"><a href="validación-de-los-resultados..html#cb105-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> Metodo), <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb105-18"><a href="validación-de-los-resultados..html#cb105-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> theta_dir_low), <span class="at">linetype  =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb105-19"><a href="validación-de-los-resultados..html#cb105-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> theta_dir_upp),  <span class="at">linetype  =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb105-20"><a href="validación-de-los-resultados..html#cb105-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="dv">10</span>) <span class="sc">+</span> </span>
-<span id="cb105-21"><a href="validación-de-los-resultados..html#cb105-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;&quot;</span>, <span class="at">x =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
-<p><img src="04-D2S3_Fay_Herriot_normal_files/figure-html/unnamed-chunk-29-1.svg" width="672" /></p>
+<div id="estimaciones-directas." class="section level2 hasAnchor" number="10.1">
+<h2><span class="header-section-number">10.1</span> Estimaciones directas.<a href="estimaciones-directas..html#estimaciones-directas." class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>En este apartado realizaremos las estimaciones directas para los dominios que fueron seleccionados en la muestra, dado que estos fueron no planeados. Las estimaciones directas son una herramienta comúnmente utilizada en la estadística inferencial para obtener información sobre una población a partir de una muestra. Sin embargo, estas estimaciones pueden presentar problemas cuando la muestra es pequeña, lo que puede conducir a una falta de precisión en las estimaciones y a una mayor incertidumbre en las conclusiones que se puedan extraer.</p>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb156-1"><a href="estimaciones-directas..html#cb156-1" aria-hidden="true" tabindex="-1"></a>encuestaDOM <span class="ot">&lt;-</span>  <span class="fu">readRDS</span>(<span class="st">&quot;Recursos/Día3/Sesion3/Data/encuestaDOM.Rds&quot;</span>)</span>
+<span id="cb156-2"><a href="estimaciones-directas..html#cb156-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb156-3"><a href="estimaciones-directas..html#cb156-3" aria-hidden="true" tabindex="-1"></a>encuestaDOM <span class="ot">&lt;-</span></span>
+<span id="cb156-4"><a href="estimaciones-directas..html#cb156-4" aria-hidden="true" tabindex="-1"></a>  encuestaDOM <span class="sc">%&gt;%</span></span>
+<span id="cb156-5"><a href="estimaciones-directas..html#cb156-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(</span>
+<span id="cb156-6"><a href="estimaciones-directas..html#cb156-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">dam2 =</span> id_dominio,</span>
+<span id="cb156-7"><a href="estimaciones-directas..html#cb156-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">upm =</span> <span class="fu">str_pad</span>(<span class="at">string =</span> upm,<span class="at">width =</span> <span class="dv">9</span>,<span class="at">pad =</span> <span class="st">&quot;0&quot;</span>),</span>
+<span id="cb156-8"><a href="estimaciones-directas..html#cb156-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">estrato =</span> <span class="fu">str_pad</span>(<span class="at">string =</span> estrato,<span class="at">width =</span> <span class="dv">5</span>,<span class="at">pad =</span> <span class="st">&quot;0&quot;</span>),</span>
+<span id="cb156-9"><a href="estimaciones-directas..html#cb156-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">factor_anual =</span> factor_expansion <span class="sc">/</span> <span class="dv">4</span>, </span>
+<span id="cb156-10"><a href="estimaciones-directas..html#cb156-10" aria-hidden="true" tabindex="-1"></a>    pet, ocupado,orden_sector</span>
+<span id="cb156-11"><a href="estimaciones-directas..html#cb156-11" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span> </span>
+<span id="cb156-12"><a href="estimaciones-directas..html#cb156-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(ocupado <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> pet <span class="sc">==</span> <span class="dv">1</span>)</span></code></pre></div>
+<p>Para la definición del diseño se hace uso de la librería <code>survey</code> como se muestra en el siguiente código</p>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb157-1"><a href="estimaciones-directas..html#cb157-1" aria-hidden="true" tabindex="-1"></a><span class="fu">options</span>(<span class="at">survey.lonely.psu=</span> <span class="st">&#39;adjust&#39;</span> )</span>
+<span id="cb157-2"><a href="estimaciones-directas..html#cb157-2" aria-hidden="true" tabindex="-1"></a>disenoDOM <span class="ot">&lt;-</span> encuestaDOM <span class="sc">%&gt;%</span></span>
+<span id="cb157-3"><a href="estimaciones-directas..html#cb157-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_survey_design</span>(</span>
+<span id="cb157-4"><a href="estimaciones-directas..html#cb157-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">strata =</span> estrato,</span>
+<span id="cb157-5"><a href="estimaciones-directas..html#cb157-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">ids =</span> upm,</span>
+<span id="cb157-6"><a href="estimaciones-directas..html#cb157-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">weights =</span> factor_anual,</span>
+<span id="cb157-7"><a href="estimaciones-directas..html#cb157-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">nest=</span>T</span>
+<span id="cb157-8"><a href="estimaciones-directas..html#cb157-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<div id="calculo-del-indicador" class="section level3 hasAnchor" number="10.1.1">
+<h3><span class="header-section-number">10.1.1</span> Calculo del indicador<a href="estimaciones-directas..html#calculo-del-indicador" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>La informalidad laboral en República Dominicana se define como el trabajo que se realiza al margen de las leyes tributarias y laborales, así como aquel que busca evadir sus obligaciones fiscales ante las agencias del gobierno. Para definir el indicador de la informalidad laboral en República Dominicana, se utiliza la siguiente fórmula:</p>
+<p><span class="math display">\[
+Tas\ de\ informalidad\ laboral = \frac{Número\ de\ trabajadores\ informales}{ Población\ económicamente\ activa} \times 100.
+\]</span></p>
+<p>Este bloque de código realiza lo siguiente:</p>
+<ul>
+<li>Se agrupa la encuesta por dam2</li>
+<li>Se calcula el tamaño muestral no ponderado (<code>n()</code>).</li>
+<li>Se calcula la razón de la variable <code>orden_sector</code> igual a 2 sobre la variable constante igual a 1 mediante el uso de <code>survey_ratio()</code>, que utiliza los pesos de muestreo para producir estimaciones de varianza y errores estándar apropiados para el muestreo complejo.</li>
+<li>La función <code>survey_ratio()</code> también permite calcular intervalos de confianza y coeficientes de variación.</li>
+</ul>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb158-1"><a href="estimaciones-directas..html#cb158-1" aria-hidden="true" tabindex="-1"></a>indicador_dom <span class="ot">&lt;-</span></span>
+<span id="cb158-2"><a href="estimaciones-directas..html#cb158-2" aria-hidden="true" tabindex="-1"></a>  disenoDOM <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(dam2) <span class="sc">%&gt;%</span> </span>
+<span id="cb158-3"><a href="estimaciones-directas..html#cb158-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb158-4"><a href="estimaciones-directas..html#cb158-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">n =</span> <span class="fu">unweighted</span>(<span class="fu">n</span>()),</span>
+<span id="cb158-5"><a href="estimaciones-directas..html#cb158-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Rd =</span> <span class="fu">survey_ratio</span>(</span>
+<span id="cb158-6"><a href="estimaciones-directas..html#cb158-6" aria-hidden="true" tabindex="-1"></a>      <span class="at">numerator =</span> orden_sector <span class="sc">==</span> <span class="dv">2</span> ,</span>
+<span id="cb158-7"><a href="estimaciones-directas..html#cb158-7" aria-hidden="true" tabindex="-1"></a>      <span class="at">denominator =</span> <span class="dv">1</span>,</span>
+<span id="cb158-8"><a href="estimaciones-directas..html#cb158-8" aria-hidden="true" tabindex="-1"></a>      <span class="at">vartype =</span> <span class="fu">c</span>(<span class="st">&quot;se&quot;</span>, <span class="st">&quot;ci&quot;</span>, <span class="st">&quot;var&quot;</span>, <span class="st">&quot;cv&quot;</span>),</span>
+<span id="cb158-9"><a href="estimaciones-directas..html#cb158-9" aria-hidden="true" tabindex="-1"></a>      <span class="at">deff =</span> T</span>
+<span id="cb158-10"><a href="estimaciones-directas..html#cb158-10" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb158-11"><a href="estimaciones-directas..html#cb158-11" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p>Ahora, como parte del proceso es necesario incorporar la información del número de
+upm por dam2, para lo cual se hace</p>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb159-1"><a href="estimaciones-directas..html#cb159-1" aria-hidden="true" tabindex="-1"></a>n_upm <span class="ot">&lt;-</span> encuestaDOM <span class="sc">%&gt;%</span> <span class="fu">distinct</span>(dam2, upm) <span class="sc">%&gt;%</span> </span>
+<span id="cb159-2"><a href="estimaciones-directas..html#cb159-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(dam2) <span class="sc">%&gt;%</span> <span class="fu">tally</span>(<span class="at">name =</span> <span class="st">&quot;n_upm&quot;</span>,<span class="at">sort =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb159-3"><a href="estimaciones-directas..html#cb159-3" aria-hidden="true" tabindex="-1"></a>indicador_dom <span class="ot">&lt;-</span> <span class="fu">inner_join</span>(n_upm,indicador_dom)</span>
+<span id="cb159-4"><a href="estimaciones-directas..html#cb159-4" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(<span class="at">object =</span> indicador_dom, <span class="at">file =</span> <span class="st">&quot;Recursos/Día3/Sesion3/Data/indicador_dom.rds&quot;</span>)</span></code></pre></div>
+<table class="table table-striped lightable-classic" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: Arial Narrow; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+dam2
+</th>
+<th style="text-align:right;">
+n_upm
+</th>
+<th style="text-align:right;">
+n
+</th>
+<th style="text-align:right;">
+Rd
+</th>
+<th style="text-align:right;">
+Rd_se
+</th>
+<th style="text-align:right;">
+Rd_low
+</th>
+<th style="text-align:right;">
+Rd_upp
+</th>
+<th style="text-align:right;">
+Rd_var
+</th>
+<th style="text-align:right;">
+Rd_cv
+</th>
+<th style="text-align:right;">
+Rd_deff
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0101
+</td>
+<td style="text-align:right;">
+126
+</td>
+<td style="text-align:right;">
+2951
+</td>
+<td style="text-align:right;">
+0.4147
+</td>
+<td style="text-align:right;">
+0.0234
+</td>
+<td style="text-align:right;">
+0.3688
+</td>
+<td style="text-align:right;">
+0.4605
+</td>
+<td style="text-align:right;">
+0.0005
+</td>
+<td style="text-align:right;">
+0.0564
+</td>
+<td style="text-align:right;">
+6.6763
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3201
+</td>
+<td style="text-align:right;">
+108
+</td>
+<td style="text-align:right;">
+2840
+</td>
+<td style="text-align:right;">
+0.4233
+</td>
+<td style="text-align:right;">
+0.0186
+</td>
+<td style="text-align:right;">
+0.3868
+</td>
+<td style="text-align:right;">
+0.4597
+</td>
+<td style="text-align:right;">
+0.0003
+</td>
+<td style="text-align:right;">
+0.0439
+</td>
+<td style="text-align:right;">
+4.0432
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2501
+</td>
+<td style="text-align:right;">
+87
+</td>
+<td style="text-align:right;">
+3057
+</td>
+<td style="text-align:right;">
+0.4108
+</td>
+<td style="text-align:right;">
+0.0192
+</td>
+<td style="text-align:right;">
+0.3731
+</td>
+<td style="text-align:right;">
+0.4485
+</td>
+<td style="text-align:right;">
+0.0004
+</td>
+<td style="text-align:right;">
+0.0467
+</td>
+<td style="text-align:right;">
+4.6897
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3203
+</td>
+<td style="text-align:right;">
+59
+</td>
+<td style="text-align:right;">
+1944
+</td>
+<td style="text-align:right;">
+0.4858
+</td>
+<td style="text-align:right;">
+0.0202
+</td>
+<td style="text-align:right;">
+0.4462
+</td>
+<td style="text-align:right;">
+0.5255
+</td>
+<td style="text-align:right;">
+0.0004
+</td>
+<td style="text-align:right;">
+0.0416
+</td>
+<td style="text-align:right;">
+3.1956
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3202
+</td>
+<td style="text-align:right;">
+42
+</td>
+<td style="text-align:right;">
+1046
+</td>
+<td style="text-align:right;">
+0.4221
+</td>
+<td style="text-align:right;">
+0.0247
+</td>
+<td style="text-align:right;">
+0.3736
+</td>
+<td style="text-align:right;">
+0.4706
+</td>
+<td style="text-align:right;">
+0.0006
+</td>
+<td style="text-align:right;">
+0.0585
+</td>
+<td style="text-align:right;">
+2.6301
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1101
+</td>
+<td style="text-align:right;">
+38
+</td>
+<td style="text-align:right;">
+1198
+</td>
+<td style="text-align:right;">
+0.3788
+</td>
+<td style="text-align:right;">
+0.0347
+</td>
+<td style="text-align:right;">
+0.3107
+</td>
+<td style="text-align:right;">
+0.4469
+</td>
+<td style="text-align:right;">
+0.0012
+</td>
+<td style="text-align:right;">
+0.0916
+</td>
+<td style="text-align:right;">
+6.1659
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3206
+</td>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+836
+</td>
+<td style="text-align:right;">
+0.3968
+</td>
+<td style="text-align:right;">
+0.0252
+</td>
+<td style="text-align:right;">
+0.3474
+</td>
+<td style="text-align:right;">
+0.4462
+</td>
+<td style="text-align:right;">
+0.0006
+</td>
+<td style="text-align:right;">
+0.0635
+</td>
+<td style="text-align:right;">
+2.2273
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+0901
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+743
+</td>
+<td style="text-align:right;">
+0.5236
+</td>
+<td style="text-align:right;">
+0.0529
+</td>
+<td style="text-align:right;">
+0.4198
+</td>
+<td style="text-align:right;">
+0.6273
+</td>
+<td style="text-align:right;">
+0.0028
+</td>
+<td style="text-align:right;">
+0.1010
+</td>
+<td style="text-align:right;">
+8.3883
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1301
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+738
+</td>
+<td style="text-align:right;">
+0.4899
+</td>
+<td style="text-align:right;">
+0.0338
+</td>
+<td style="text-align:right;">
+0.4236
+</td>
+<td style="text-align:right;">
+0.5562
+</td>
+<td style="text-align:right;">
+0.0011
+</td>
+<td style="text-align:right;">
+0.0690
+</td>
+<td style="text-align:right;">
+3.3902
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2101
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+505
+</td>
+<td style="text-align:right;">
+0.4522
+</td>
+<td style="text-align:right;">
+0.0391
+</td>
+<td style="text-align:right;">
+0.3756
+</td>
+<td style="text-align:right;">
+0.5289
+</td>
+<td style="text-align:right;">
+0.0015
+</td>
+<td style="text-align:right;">
+0.0864
+</td>
+<td style="text-align:right;">
+3.1216
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="proceso-de-benchmark.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="mapa-de-pobreza.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="día-3---sesión-3--modelos-de-área---estimación-de-la-informalidad-laboral..html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="función-generalizada-de-varianza.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -329,7 +717,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/psirusteam/2021ASDA/04-D2S3_Fay_Herriot_normal.qmd",
+"link": "https://github.com/psirusteam/2021ASDA/08-D3S3_Mercado_de_trabajo.qmd",
 "text": "Edit"
 },
 "history": {

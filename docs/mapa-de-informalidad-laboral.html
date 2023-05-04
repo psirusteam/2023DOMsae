@@ -4,18 +4,18 @@
 
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>7.4 Validación de los resultados. | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas</title>
+  <title>10.6 Mapa de informalidad laboral | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas</title>
   <meta name="description" content="Taller de instalación de capacidades en SAE." />
   <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
 
-  <meta property="og:title" content="7.4 Validación de los resultados. | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas" />
+  <meta property="og:title" content="10.6 Mapa de informalidad laboral | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas" />
   <meta property="og:type" content="book" />
   
   <meta property="og:description" content="Taller de instalación de capacidades en SAE." />
   <meta name="github-repo" content="psirusteam/HHS-Handbook" />
 
   <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="7.4 Validación de los resultados. | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas" />
+  <meta name="twitter:title" content="10.6 Mapa de informalidad laboral | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas" />
   
   <meta name="twitter:description" content="Taller de instalación de capacidades en SAE." />
   
@@ -30,8 +30,8 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black" />
   
   
-<link rel="prev" href="proceso-de-benchmark.html"/>
-<link rel="next" href="mapa-de-pobreza.html"/>
+<link rel="prev" href="preparando-los-insumos-para-stan-4.html"/>
+<link rel="next" href="mapa-del-coeficiente-de-variación.-3.html"/>
 <script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
@@ -266,39 +266,45 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
           <div class="page-inner">
 
             <section class="normal" id="section-">
-<div id="validación-de-los-resultados." class="section level2 hasAnchor" number="7.4">
-<h2><span class="header-section-number">7.4</span> Validación de los resultados.<a href="validación-de-los-resultados..html#validación-de-los-resultados." class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Este código junta las estimaciones del modelo con pesos de benchmarking con los valores observados y sintéticos, y luego resume las estimaciones combinadas para compararlas con la estimación directa obtenida anteriormente.</p>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb105-1"><a href="validación-de-los-resultados..html#cb105-1" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> estimacionesBench <span class="sc">%&gt;%</span> <span class="fu">left_join</span>(</span>
-<span id="cb105-2"><a href="validación-de-los-resultados..html#cb105-2" aria-hidden="true" tabindex="-1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb105-3"><a href="validación-de-los-resultados..html#cb105-3" aria-hidden="true" tabindex="-1"></a>data_dir <span class="sc">%&gt;%</span> <span class="fu">select</span>(dam2, thetaSyn, thetaFH),</span>
-<span id="cb105-4"><a href="validación-de-los-resultados..html#cb105-4" aria-hidden="true" tabindex="-1"></a>data_syn <span class="sc">%&gt;%</span> <span class="fu">select</span>(dam2, thetaSyn, thetaFH))) <span class="sc">%&gt;%</span> </span>
-<span id="cb105-5"><a href="validación-de-los-resultados..html#cb105-5" aria-hidden="true" tabindex="-1"></a><span class="fu">group_by</span>(region) <span class="sc">%&gt;%</span> </span>
-<span id="cb105-6"><a href="validación-de-los-resultados..html#cb105-6" aria-hidden="true" tabindex="-1"></a><span class="fu">summarise</span>(<span class="at">thetaSyn =</span> <span class="fu">sum</span>(W_i <span class="sc">*</span> thetaSyn),</span>
-<span id="cb105-7"><a href="validación-de-los-resultados..html#cb105-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">thetaFH =</span> <span class="fu">sum</span>(W_i <span class="sc">*</span> theta_pred),</span>
-<span id="cb105-8"><a href="validación-de-los-resultados..html#cb105-8" aria-hidden="true" tabindex="-1"></a>          <span class="at">theta_RBench =</span> <span class="fu">sum</span>(W_i <span class="sc">*</span> theta_pred_RBench)</span>
-<span id="cb105-9"><a href="validación-de-los-resultados..html#cb105-9" aria-hidden="true" tabindex="-1"></a>          ) <span class="sc">%&gt;%</span>   </span>
-<span id="cb105-10"><a href="validación-de-los-resultados..html#cb105-10" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(directoDam, <span class="at">by =</span> <span class="st">&quot;region&quot;</span>)  <span class="sc">%&gt;%</span> </span>
-<span id="cb105-11"><a href="validación-de-los-resultados..html#cb105-11" aria-hidden="true" tabindex="-1"></a><span class="fu">mutate</span>(<span class="at">id =</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">n</span>())</span>
-<span id="cb105-12"><a href="validación-de-los-resultados..html#cb105-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb105-13"><a href="validación-de-los-resultados..html#cb105-13" aria-hidden="true" tabindex="-1"></a>temp <span class="sc">%&lt;&gt;%</span> <span class="fu">gather</span>(<span class="at">key =</span> <span class="st">&quot;Metodo&quot;</span>,<span class="at">value =</span> <span class="st">&quot;Estimacion&quot;</span>,</span>
-<span id="cb105-14"><a href="validación-de-los-resultados..html#cb105-14" aria-hidden="true" tabindex="-1"></a>                <span class="sc">-</span>id, <span class="sc">-</span>region, <span class="sc">-</span>theta_dir_upp, <span class="sc">-</span>theta_dir_low)</span>
-<span id="cb105-15"><a href="validación-de-los-resultados..html#cb105-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb105-16"><a href="validación-de-los-resultados..html#cb105-16" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> temp, <span class="fu">aes</span>(<span class="at">x =</span> id, <span class="at">y =</span> Estimacion, <span class="at">shape =</span> Metodo)) <span class="sc">+</span></span>
-<span id="cb105-17"><a href="validación-de-los-resultados..html#cb105-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> Metodo), <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb105-18"><a href="validación-de-los-resultados..html#cb105-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> theta_dir_low), <span class="at">linetype  =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb105-19"><a href="validación-de-los-resultados..html#cb105-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> theta_dir_upp),  <span class="at">linetype  =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb105-20"><a href="validación-de-los-resultados..html#cb105-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>(<span class="dv">10</span>) <span class="sc">+</span> </span>
-<span id="cb105-21"><a href="validación-de-los-resultados..html#cb105-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;&quot;</span>, <span class="at">x =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
-<p><img src="04-D2S3_Fay_Herriot_normal_files/figure-html/unnamed-chunk-29-1.svg" width="672" /></p>
+<div id="mapa-de-informalidad-laboral" class="section level2 hasAnchor" number="10.6">
+<h2><span class="header-section-number">10.6</span> Mapa de informalidad laboral<a href="mapa-de-informalidad-laboral.html#mapa-de-informalidad-laboral" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>El siguiente bloque de código carga los paquetes <code>sp</code>, <code>sf</code> y <code>tmap</code> y realiza una serie de operaciones. En primer lugar, une (rbind) las estimaciones de los dominios observados y no observados (<code>data_dir</code>, <code>data_syn</code>) y selecciona las variables <code>dam2</code>, <code>pobreza</code> (informalidad laboral), <code>pred_arcoseno</code>, <code>pred_arcoseno_EE</code> y <code>Cv_pred</code> utilizando la función <code>select()</code>. A continuación, lee un archivo <code>Shapefile</code> que contiene información geoespacial del país. Luego, crea un mapa temático (<code>tmap</code>) utilizando la función <code>tm_shape()</code> y agregando capas con la función <code>tm_polygons()</code>. El mapa representa dos variables llamadas <code>pobreza</code> y <code>pred_arcoseno</code>, utilizando una paleta de colores llamada “YlOrRd” y establece los cortes de los intervalos de las variables con la variable <code>brks_lp</code>. Finalmente, la función <code>tm_layout()</code> establece algunos parámetros de diseño del mapa, como la relación de aspecto (<code>asp</code>).</p>
+<div class="sourceCode" id="cb188"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb188-1"><a href="mapa-de-informalidad-laboral.html#cb188-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sp)</span>
+<span id="cb188-2"><a href="mapa-de-informalidad-laboral.html#cb188-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb188-3"><a href="mapa-de-informalidad-laboral.html#cb188-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tmap)</span>
+<span id="cb188-4"><a href="mapa-de-informalidad-laboral.html#cb188-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb188-5"><a href="mapa-de-informalidad-laboral.html#cb188-5" aria-hidden="true" tabindex="-1"></a>data_map <span class="ot">&lt;-</span> <span class="fu">rbind</span>(data_dir, data_syn) <span class="sc">%&gt;%</span> </span>
+<span id="cb188-6"><a href="mapa-de-informalidad-laboral.html#cb188-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(dam2, Rd, pred_arcoseno, pred_arcoseno_EE,Cv_pred ) </span>
+<span id="cb188-7"><a href="mapa-de-informalidad-laboral.html#cb188-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb188-8"><a href="mapa-de-informalidad-laboral.html#cb188-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb188-9"><a href="mapa-de-informalidad-laboral.html#cb188-9" aria-hidden="true" tabindex="-1"></a><span class="do">## Leer Shapefile del país</span></span>
+<span id="cb188-10"><a href="mapa-de-informalidad-laboral.html#cb188-10" aria-hidden="true" tabindex="-1"></a>ShapeSAE <span class="ot">&lt;-</span> <span class="fu">read_sf</span>(<span class="st">&quot;Recursos/Día3/Sesion3/Shape/DOM_dam2.shp&quot;</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb188-11"><a href="mapa-de-informalidad-laboral.html#cb188-11" aria-hidden="true" tabindex="-1"></a>   <span class="fu">rename</span>(<span class="at">dam2 =</span> id_dominio) </span>
+<span id="cb188-12"><a href="mapa-de-informalidad-laboral.html#cb188-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb188-13"><a href="mapa-de-informalidad-laboral.html#cb188-13" aria-hidden="true" tabindex="-1"></a>mapa <span class="ot">&lt;-</span> <span class="fu">tm_shape</span>(ShapeSAE <span class="sc">%&gt;%</span></span>
+<span id="cb188-14"><a href="mapa-de-informalidad-laboral.html#cb188-14" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">left_join</span>(data_map,  <span class="at">by =</span> <span class="st">&quot;dam2&quot;</span>))</span>
+<span id="cb188-15"><a href="mapa-de-informalidad-laboral.html#cb188-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb188-16"><a href="mapa-de-informalidad-laboral.html#cb188-16" aria-hidden="true" tabindex="-1"></a>brks_lp <span class="ot">&lt;-</span> <span class="fu">quantile</span>(data_map<span class="sc">$</span>pred_arcoseno)</span>
+<span id="cb188-17"><a href="mapa-de-informalidad-laboral.html#cb188-17" aria-hidden="true" tabindex="-1"></a><span class="fu">tmap_options</span>(<span class="at">check.and.fix =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb188-18"><a href="mapa-de-informalidad-laboral.html#cb188-18" aria-hidden="true" tabindex="-1"></a>Mapa_lp <span class="ot">&lt;-</span></span>
+<span id="cb188-19"><a href="mapa-de-informalidad-laboral.html#cb188-19" aria-hidden="true" tabindex="-1"></a>  mapa <span class="sc">+</span> <span class="fu">tm_polygons</span>(</span>
+<span id="cb188-20"><a href="mapa-de-informalidad-laboral.html#cb188-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">c</span>(<span class="st">&quot;Rd&quot;</span>, <span class="st">&quot;pred_arcoseno&quot;</span>),</span>
+<span id="cb188-21"><a href="mapa-de-informalidad-laboral.html#cb188-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">breaks =</span> brks_lp,</span>
+<span id="cb188-22"><a href="mapa-de-informalidad-laboral.html#cb188-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">&quot;Mapa de Tasa de informalidad&quot;</span>,</span>
+<span id="cb188-23"><a href="mapa-de-informalidad-laboral.html#cb188-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">palette =</span> <span class="st">&quot;YlOrRd&quot;</span>,</span>
+<span id="cb188-24"><a href="mapa-de-informalidad-laboral.html#cb188-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">colorNA =</span> <span class="st">&quot;white&quot;</span></span>
+<span id="cb188-25"><a href="mapa-de-informalidad-laboral.html#cb188-25" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span> <span class="fu">tm_layout</span>(<span class="at">asp =</span> <span class="fl">2.5</span>)</span>
+<span id="cb188-26"><a href="mapa-de-informalidad-laboral.html#cb188-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb188-27"><a href="mapa-de-informalidad-laboral.html#cb188-27" aria-hidden="true" tabindex="-1"></a>Mapa_lp</span></code></pre></div>
+<p><img src="Recursos/D%C3%ADa3/Sesion3/0Recursos/Mapa_arcoseno.PNG" width="200%" style="display: block; margin: auto;" /></p>
 </div>
             </section>
 
           </div>
         </div>
       </div>
-<a href="proceso-de-benchmark.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-<a href="mapa-de-pobreza.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+<a href="preparando-los-insumos-para-stan-4.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="mapa-del-coeficiente-de-variación.-3.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
@@ -329,7 +335,7 @@ gitbook.start({
 "size": 2
 },
 "edit": {
-"link": "https://github.com/psirusteam/2021ASDA/04-D2S3_Fay_Herriot_normal.qmd",
+"link": "https://github.com/psirusteam/2021ASDA/08-D3S3_Mercado_de_trabajo.qmd",
 "text": "Edit"
 },
 "history": {

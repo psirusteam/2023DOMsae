@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="es" xml:lang="es">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>10.2 Función Generalizada de Varianza | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas</title>
+  <meta name="description" content="Taller de instalación de capacidades en SAE." />
+  <meta name="generator" content="bookdown 0.29 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="10.2 Función Generalizada de Varianza | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="Taller de instalación de capacidades en SAE." />
+  <meta name="github-repo" content="psirusteam/HHS-Handbook" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="10.2 Función Generalizada de Varianza | Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas" />
+  
+  <meta name="twitter:description" content="Taller de instalación de capacidades en SAE." />
+  
+
+<meta name="author" content="Andrés Gutiérrez, Stalyn Guerrero" />
+
+
+<meta name="date" content="2023-05-04" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="estimaciones-directas..html"/>
+<link rel="next" href="estimación-de-la-informalidad-laboral-con-un-modelo-de-área-con-tranformación-arcoseno..html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+<script src="libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li><a href="./">Taller de instalación de capacidades en SAE</a></li>
+
+<li class="divider"></li>
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Agenda</a>
+<ul>
+<li class="chapter" data-level="" data-path="material-del-curso.html"><a href="material-del-curso.html"><i class="fa fa-check"></i>Material del curso</a></li>
+</ul></li>
+<li class="chapter" data-level="1" data-path="día-1---sesión-1--no-dejar-a-nadie-atrás---ods-y-la-agenda-2030.html"><a href="día-1---sesión-1--no-dejar-a-nadie-atrás---ods-y-la-agenda-2030.html"><i class="fa fa-check"></i><b>1</b> Día 1 - Sesión 1- No dejar a nadie atrás - ODS y la Agenda 2030</a></li>
+<li class="chapter" data-level="2" data-path="día-1---sesión-2--limitaciones-de-las-encuestas-de-hogares.html"><a href="día-1---sesión-2--limitaciones-de-las-encuestas-de-hogares.html"><i class="fa fa-check"></i><b>2</b> Día 1 - Sesión 2- Limitaciones de las encuestas de hogares</a></li>
+<li class="chapter" data-level="3" data-path="día-1---sesión-3--censo-e-información-satelital.html"><a href="día-1---sesión-3--censo-e-información-satelital.html"><i class="fa fa-check"></i><b>3</b> Día 1 - Sesión 3- Censo e información satelital</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="uso-de-imágenes-satelitales-y-sae.html"><a href="uso-de-imágenes-satelitales-y-sae.html"><i class="fa fa-check"></i><b>3.1</b> Uso de imágenes satelitales y SAE</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="uso-de-imágenes-satelitales-y-sae.html"><a href="uso-de-imágenes-satelitales-y-sae.html#fuentes-de-datos-de-imágenes-satelitales"><i class="fa fa-check"></i><b>3.1.1</b> Fuentes de datos de imágenes satelitales</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="google-earth-eninge.html"><a href="google-earth-eninge.html"><i class="fa fa-check"></i><b>3.2</b> Google Earth Eninge</a></li>
+<li class="chapter" data-level="3.3" data-path="instalación-de-rgee.html"><a href="instalación-de-rgee.html"><i class="fa fa-check"></i><b>3.3</b> Instalación de rgee</a>
+<ul>
+<li class="chapter" data-level="3.3.1" data-path="instalación-de-rgee.html"><a href="instalación-de-rgee.html#descargar-información-satelital"><i class="fa fa-check"></i><b>3.3.1</b> Descargar información satelital</a></li>
+<li class="chapter" data-level="3.3.2" data-path="instalación-de-rgee.html"><a href="instalación-de-rgee.html#luces-nocturnas"><i class="fa fa-check"></i><b>3.3.2</b> Luces nocturnas</a></li>
+<li class="chapter" data-level="3.3.3" data-path="instalación-de-rgee.html"><a href="instalación-de-rgee.html#cubrimiento-cultivos"><i class="fa fa-check"></i><b>3.3.3</b> Cubrimiento cultivos</a></li>
+<li class="chapter" data-level="3.3.4" data-path="instalación-de-rgee.html"><a href="instalación-de-rgee.html#cubrimiento-urbanos"><i class="fa fa-check"></i><b>3.3.4</b> Cubrimiento urbanos</a></li>
+<li class="chapter" data-level="3.3.5" data-path="instalación-de-rgee.html"><a href="instalación-de-rgee.html#modificación-humana"><i class="fa fa-check"></i><b>3.3.5</b> Modificación humana</a></li>
+<li class="chapter" data-level="3.3.6" data-path="instalación-de-rgee.html"><a href="instalación-de-rgee.html#tiempo-promedio-al-hospital"><i class="fa fa-check"></i><b>3.3.6</b> Tiempo promedio al hospital</a></li>
+<li class="chapter" data-level="3.3.7" data-path="instalación-de-rgee.html"><a href="instalación-de-rgee.html#tiempo-promedio-al-hospital-en-vehiculo-no-motorizado"><i class="fa fa-check"></i><b>3.3.7</b> Tiempo promedio al hospital en vehiculo no motorizado</a></li>
+</ul></li>
+<li class="chapter" data-level="3.4" data-path="censos-de-población-y-vivienda.html"><a href="censos-de-población-y-vivienda.html"><i class="fa fa-check"></i><b>3.4</b> Censos de población y vivienda</a>
+<ul>
+<li class="chapter" data-level="3.4.1" data-path="censos-de-población-y-vivienda.html"><a href="censos-de-población-y-vivienda.html#mapas-de-las-variables-con-información-censal."><i class="fa fa-check"></i><b>3.4.1</b> Mapas de las variables con información censal.</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="día-2---sesión-1--fundamentos-de-la-inferencia-bayesiana-en-r-y-stan.html"><a href="día-2---sesión-1--fundamentos-de-la-inferencia-bayesiana-en-r-y-stan.html"><i class="fa fa-check"></i><b>4</b> Día 2 - Sesión 1- Fundamentos de la inferencia Bayesiana en R y STAN</a></li>
+<li class="chapter" data-level="5" data-path="día-2---sesión-1--modelos-sintéticos-simples.html"><a href="día-2---sesión-1--modelos-sintéticos-simples.html"><i class="fa fa-check"></i><b>5</b> Día 2 - Sesión 1- Modelos sintéticos simples</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="regla-de-bayes.html"><a href="regla-de-bayes.html"><i class="fa fa-check"></i><b>5.1</b> Regla de Bayes</a></li>
+<li class="chapter" data-level="5.2" data-path="inferencia-bayesiana..html"><a href="inferencia-bayesiana..html"><i class="fa fa-check"></i><b>5.2</b> Inferencia Bayesiana.</a></li>
+<li class="chapter" data-level="5.3" data-path="modelos-uniparamétricos.html"><a href="modelos-uniparamétricos.html"><i class="fa fa-check"></i><b>5.3</b> Modelos uniparamétricos</a>
+<ul>
+<li class="chapter" data-level="5.3.1" data-path="modelos-uniparamétricos.html"><a href="modelos-uniparamétricos.html#modelo-de-unidad-bernoulli"><i class="fa fa-check"></i><b>5.3.1</b> Modelo de unidad: Bernoulli</a></li>
+<li class="chapter" data-level="5.3.2" data-path="modelos-uniparamétricos.html"><a href="modelos-uniparamétricos.html#modelo-de-área-binomial"><i class="fa fa-check"></i><b>5.3.2</b> Modelo de área: Binomial</a></li>
+<li class="chapter" data-level="5.3.3" data-path="modelos-uniparamétricos.html"><a href="modelos-uniparamétricos.html#modelo-de-unidad-normal-con-media-desconocida"><i class="fa fa-check"></i><b>5.3.3</b> Modelo de unidad: Normal con media desconocida</a></li>
+</ul></li>
+<li class="chapter" data-level="5.4" data-path="modelos-multiparamétricos.html"><a href="modelos-multiparamétricos.html"><i class="fa fa-check"></i><b>5.4</b> Modelos multiparamétricos</a>
+<ul>
+<li class="chapter" data-level="5.4.1" data-path="modelos-multiparamétricos.html"><a href="modelos-multiparamétricos.html#modelo-de-unidad-normal-con-media-y-varianza-desconocida"><i class="fa fa-check"></i><b>5.4.1</b> Modelo de unidad: Normal con media y varianza desconocida</a></li>
+<li class="chapter" data-level="5.4.2" data-path="modelos-multiparamétricos.html"><a href="modelos-multiparamétricos.html#modelo-multinomial"><i class="fa fa-check"></i><b>5.4.2</b> Modelo Multinomial</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="día-2---sesión-1--estimaciones-encft-y-función-generalizada-de-varianza.html"><a href="día-2---sesión-1--estimaciones-encft-y-función-generalizada-de-varianza.html"><i class="fa fa-check"></i><b>6</b> Día 2 - Sesión 1- Estimaciones ENCFT y Función Generalizada de Varianza</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="datos-de-la-encuesta.html"><a href="datos-de-la-encuesta.html"><i class="fa fa-check"></i><b>6.1</b> Datos de la encuesta</a></li>
+<li class="chapter" data-level="6.2" data-path="análisis-gráfico.html"><a href="análisis-gráfico.html"><i class="fa fa-check"></i><b>6.2</b> Análisis gráfico</a></li>
+<li class="chapter" data-level="6.3" data-path="modelo-para-la-varianza.html"><a href="modelo-para-la-varianza.html"><i class="fa fa-check"></i><b>6.3</b> Modelo para la varianza</a></li>
+</ul></li>
+<li class="chapter" data-level="7" data-path="día-2---sesión-3--modelo-de-fay-herriot---estimación-de-la-pobreza.html"><a href="día-2---sesión-3--modelo-de-fay-herriot---estimación-de-la-pobreza.html"><i class="fa fa-check"></i><b>7</b> Día 2 - Sesión 3- Modelo de Fay Herriot - Estimación de la pobreza</a>
+<ul>
+<li class="chapter" data-level="" data-path="día-2---sesión-3--modelo-de-fay-herriot---estimación-de-la-pobreza.html"><a href="día-2---sesión-3--modelo-de-fay-herriot---estimación-de-la-pobreza.html#modelo-de-área-para-la-estimación-de-la-pobreza"><i class="fa fa-check"></i>Modelo de área para la estimación de la pobreza</a></li>
+<li class="chapter" data-level="7.1" data-path="procedimiento-de-estimación.html"><a href="procedimiento-de-estimación.html"><i class="fa fa-check"></i><b>7.1</b> Procedimiento de estimación</a></li>
+<li class="chapter" data-level="7.2" data-path="preparando-los-insumos-para-stan.html"><a href="preparando-los-insumos-para-stan.html"><i class="fa fa-check"></i><b>7.2</b> Preparando los insumos para <code>STAN</code></a>
+<ul>
+<li class="chapter" data-level="7.2.1" data-path="preparando-los-insumos-para-stan.html"><a href="preparando-los-insumos-para-stan.html#resultados-del-modelo-para-los-dominios-observados."><i class="fa fa-check"></i><b>7.2.1</b> Resultados del modelo para los dominios observados.</a></li>
+</ul></li>
+<li class="chapter" data-level="7.3" data-path="proceso-de-benchmark.html"><a href="proceso-de-benchmark.html"><i class="fa fa-check"></i><b>7.3</b> Proceso de Benchmark</a></li>
+<li class="chapter" data-level="7.4" data-path="validación-de-los-resultados..html"><a href="validación-de-los-resultados..html"><i class="fa fa-check"></i><b>7.4</b> Validación de los resultados.</a></li>
+<li class="chapter" data-level="7.5" data-path="mapa-de-pobreza.html"><a href="mapa-de-pobreza.html"><i class="fa fa-check"></i><b>7.5</b> Mapa de pobreza</a></li>
+</ul></li>
+<li class="chapter" data-level="8" data-path="día-3---sesión-1--modelos-de-área---estimación-de-la-pobreza-y-la-transformación-arcoseno..html"><a href="día-3---sesión-1--modelos-de-área---estimación-de-la-pobreza-y-la-transformación-arcoseno..html"><i class="fa fa-check"></i><b>8</b> Día 3 - Sesión 1- Modelos de área - Estimación de la pobreza y la transformación ArcoSeno.</a>
+<ul>
+<li class="chapter" data-level="8.1" data-path="procedimiento-de-estimación-1.html"><a href="procedimiento-de-estimación-1.html"><i class="fa fa-check"></i><b>8.1</b> Procedimiento de estimación</a></li>
+<li class="chapter" data-level="8.2" data-path="preparando-los-insumos-para-stan-1.html"><a href="preparando-los-insumos-para-stan-1.html"><i class="fa fa-check"></i><b>8.2</b> Preparando los insumos para <code>STAN</code></a>
+<ul>
+<li class="chapter" data-level="8.2.1" data-path="preparando-los-insumos-para-stan-1.html"><a href="preparando-los-insumos-para-stan-1.html#resultados-del-modelo-para-los-dominios-observados.-1"><i class="fa fa-check"></i><b>8.2.1</b> Resultados del modelo para los dominios observados.</a></li>
+</ul></li>
+<li class="chapter" data-level="8.3" data-path="mapa-de-pobreza-1.html"><a href="mapa-de-pobreza-1.html"><i class="fa fa-check"></i><b>8.3</b> Mapa de pobreza</a></li>
+<li class="chapter" data-level="8.4" data-path="mapa-del-coeficiente-de-variación..html"><a href="mapa-del-coeficiente-de-variación..html"><i class="fa fa-check"></i><b>8.4</b> Mapa del coeficiente de variación.</a></li>
+</ul></li>
+<li class="chapter" data-level="9" data-path="día-3---sesión-2--modelos-de-área---estimación-de-la-pobreza-en-familias-beta-y-binomial.html"><a href="día-3---sesión-2--modelos-de-área---estimación-de-la-pobreza-en-familias-beta-y-binomial.html"><i class="fa fa-check"></i><b>9</b> Día 3 - Sesión 2- Modelos de área - Estimación de la pobreza en familias beta y binomial</a>
+<ul>
+<li class="chapter" data-level="9.1" data-path="modelo-de-fay-herriot-de-variable-respuesta-beta..html"><a href="modelo-de-fay-herriot-de-variable-respuesta-beta..html"><i class="fa fa-check"></i><b>9.1</b> Modelo de Fay Herriot de variable respuesta beta.</a>
+<ul>
+<li class="chapter" data-level="9.1.1" data-path="modelo-de-fay-herriot-de-variable-respuesta-beta..html"><a href="modelo-de-fay-herriot-de-variable-respuesta-beta..html#procedimiento-de-estimación-2"><i class="fa fa-check"></i><b>9.1.1</b> Procedimiento de estimación</a></li>
+<li class="chapter" data-level="9.1.2" data-path="modelo-de-fay-herriot-de-variable-respuesta-beta..html"><a href="modelo-de-fay-herriot-de-variable-respuesta-beta..html#preparando-los-insumos-para-stan-2"><i class="fa fa-check"></i><b>9.1.2</b> Preparando los insumos para <code>STAN</code></a></li>
+</ul></li>
+<li class="chapter" data-level="9.2" data-path="modelo-fay-herriot-de-variable-respuesta-beta..html"><a href="modelo-fay-herriot-de-variable-respuesta-beta..html"><i class="fa fa-check"></i><b>9.2</b> Modelo Fay Herriot de variable respuesta beta.</a>
+<ul>
+<li class="chapter" data-level="9.2.1" data-path="modelo-fay-herriot-de-variable-respuesta-beta..html"><a href="modelo-fay-herriot-de-variable-respuesta-beta..html#procedimiento-de-estimación-3"><i class="fa fa-check"></i><b>9.2.1</b> Procedimiento de estimación</a></li>
+<li class="chapter" data-level="9.2.2" data-path="modelo-fay-herriot-de-variable-respuesta-beta..html"><a href="modelo-fay-herriot-de-variable-respuesta-beta..html#preparando-los-insumos-para-stan-3"><i class="fa fa-check"></i><b>9.2.2</b> Preparando los insumos para <code>STAN</code></a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="10" data-path="día-3---sesión-3--modelos-de-área---estimación-de-la-informalidad-laboral..html"><a href="día-3---sesión-3--modelos-de-área---estimación-de-la-informalidad-laboral..html"><i class="fa fa-check"></i><b>10</b> Día 3 - Sesión 3- Modelos de área - Estimación de la informalidad laboral.</a>
+<ul>
+<li class="chapter" data-level="10.1" data-path="estimaciones-directas..html"><a href="estimaciones-directas..html"><i class="fa fa-check"></i><b>10.1</b> Estimaciones directas.</a>
+<ul>
+<li class="chapter" data-level="10.1.1" data-path="estimaciones-directas..html"><a href="estimaciones-directas..html#calculo-del-indicador"><i class="fa fa-check"></i><b>10.1.1</b> Calculo del indicador</a></li>
+</ul></li>
+<li class="chapter" data-level="10.2" data-path="función-generalizada-de-varianza.html"><a href="función-generalizada-de-varianza.html"><i class="fa fa-check"></i><b>10.2</b> Función Generalizada de Varianza</a>
+<ul>
+<li class="chapter" data-level="10.2.1" data-path="función-generalizada-de-varianza.html"><a href="función-generalizada-de-varianza.html#gráficas-exploratorias"><i class="fa fa-check"></i><b>10.2.1</b> Gráficas exploratorias</a></li>
+<li class="chapter" data-level="10.2.2" data-path="función-generalizada-de-varianza.html"><a href="función-generalizada-de-varianza.html#ajustando-el-modelo-log-lineal-de-la-varianza"><i class="fa fa-check"></i><b>10.2.2</b> Ajustando el modelo log-lineal de la varianza</a></li>
+<li class="chapter" data-level="10.2.3" data-path="función-generalizada-de-varianza.html"><a href="función-generalizada-de-varianza.html#validaciones-sobre-el-modelo"><i class="fa fa-check"></i><b>10.2.3</b> Validaciones sobre el modelo</a></li>
+<li class="chapter" data-level="10.2.4" data-path="función-generalizada-de-varianza.html"><a href="función-generalizada-de-varianza.html#otras-validaciones-sobre-el-resultado-del-modelo."><i class="fa fa-check"></i><b>10.2.4</b> Otras validaciones sobre el resultado del modelo.</a></li>
+</ul></li>
+<li class="chapter" data-level="10.3" data-path="estimación-de-la-informalidad-laboral-con-un-modelo-de-área-con-tranformación-arcoseno..html"><a href="estimación-de-la-informalidad-laboral-con-un-modelo-de-área-con-tranformación-arcoseno..html"><i class="fa fa-check"></i><b>10.3</b> Estimación de la informalidad laboral con un modelo de área con tranformación arcoseno.</a></li>
+<li class="chapter" data-level="10.4" data-path="procedimiento-de-estimación-4.html"><a href="procedimiento-de-estimación-4.html"><i class="fa fa-check"></i><b>10.4</b> Procedimiento de estimación</a></li>
+<li class="chapter" data-level="10.5" data-path="preparando-los-insumos-para-stan-4.html"><a href="preparando-los-insumos-para-stan-4.html"><i class="fa fa-check"></i><b>10.5</b> Preparando los insumos para <code>STAN</code></a>
+<ul>
+<li class="chapter" data-level="10.5.1" data-path="preparando-los-insumos-para-stan-4.html"><a href="preparando-los-insumos-para-stan-4.html#resultados-del-modelo-para-los-dominios-observados.-4"><i class="fa fa-check"></i><b>10.5.1</b> Resultados del modelo para los dominios observados.</a></li>
+</ul></li>
+<li class="chapter" data-level="10.6" data-path="mapa-de-informalidad-laboral.html"><a href="mapa-de-informalidad-laboral.html"><i class="fa fa-check"></i><b>10.6</b> Mapa de informalidad laboral</a></li>
+<li class="chapter" data-level="10.7" data-path="mapa-del-coeficiente-de-variación.-3.html"><a href="mapa-del-coeficiente-de-variación.-3.html"><i class="fa fa-check"></i><b>10.7</b> Mapa del coeficiente de variación.</a></li>
+</ul></li>
+<li class="divider"></li>
+<li><a Taller de instalación de capacidades en SAE </a></li>
+
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="función-generalizada-de-varianza" class="section level2 hasAnchor" number="10.2">
+<h2><span class="header-section-number">10.2</span> Función Generalizada de Varianza<a href="función-generalizada-de-varianza.html#función-generalizada-de-varianza" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>La Función Generalizada de Varianza (GVF) es una técnica estadística utilizada para suavizar las estimaciones de las varianzas directas de los estimadores. Esta técnica busca estimar la varianza suavizada del estimador directo a través de un modelo log-lineal que involucra un vector de covariables auxiliares. La GVF es particularmente útil para modelar las varianzas de los estimadores directos, ya que permite lidiar con la naturaleza positiva de este parámetro. Además, esta técnica ha sido ampliamente utilizada en la literatura para estimar la varianza de los estimadores directos en diferentes contextos, incluyendo la estimación de ingreso per cápita en los Estados Unidos, cifras oficiales del mercado de trabajo en Canadá y las tasas de pobreza comunal en la región. En este sentido, la GVF se plantea en términos de una relación log-lineal con un vector de covariables auxiliares que puede variar dependiendo del contexto en que se aplique.</p>
+<p>El proceso continua con la selección de las dam que posean una varianza estimada mayor que cero, un deff mayor que 1 y 2 o más UPMs. Para los dominios que superan estas condiciones se realiza la transformación <span class="math inline">\(\log(\hat{\sigma}^2_d)\)</span>, además se realiza la selección de las columnas identificador del municipio (<code>id_dominio</code>), la estimación directa del indicador (<code>Rd</code>), El número de personas en el dominio (<code>n</code>) y la varianza estimada del para la estimación directa <code>Rd_var</code>,siendo esta la que transforma mediante la función <code>log()</code>.</p>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb160-1"><a href="función-generalizada-de-varianza.html#cb160-1" aria-hidden="true" tabindex="-1"></a>indicador_dom1 <span class="ot">&lt;-</span> indicador_dom <span class="sc">%&gt;%</span> </span>
+<span id="cb160-2"><a href="función-generalizada-de-varianza.html#cb160-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Rd_var<span class="sc">&gt;</span><span class="dv">0</span> <span class="sc">&amp;</span> Rd_deff<span class="sc">&gt;=</span><span class="dv">1</span> <span class="sc">&amp;</span> n_upm <span class="sc">&gt;=</span> <span class="dv">2</span>) </span>
+<span id="cb160-3"><a href="función-generalizada-de-varianza.html#cb160-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb160-4"><a href="función-generalizada-de-varianza.html#cb160-4" aria-hidden="true" tabindex="-1"></a>baseFGV <span class="ot">&lt;-</span>  indicador_dom1 <span class="sc">%&gt;%</span>  </span>
+<span id="cb160-5"><a href="función-generalizada-de-varianza.html#cb160-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(dam2 , Rd, n, Rd_var) <span class="sc">%&gt;%</span></span>
+<span id="cb160-6"><a href="función-generalizada-de-varianza.html#cb160-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ln_sigma2 =</span> <span class="fu">log</span>(Rd_var))</span></code></pre></div>
+<div id="gráficas-exploratorias" class="section level3 hasAnchor" number="10.2.1">
+<h3><span class="header-section-number">10.2.1</span> Gráficas exploratorias<a href="función-generalizada-de-varianza.html#gráficas-exploratorias" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El código muestra la creación de cuatro gráficos usando la librería <code>ggplot2</code> y el uso de los datos <code>baseFGV</code>. Estos gráficos tienen como objetivo explorar la relación entre el logaritmo de la varianza y diferentes transformaciones de la <code>n</code> y <code>Rd</code>.</p>
+<p>El primer gráfico (<code>p1</code>) representa la relación entre la estimación directa y el logaritmo de la varianza. El segundo gráfico (<code>p2</code>) representa la relación entre el tamaño de muestra y el logaritmo de la varianza. El tercer gráfico (<code>p3</code>) representa la relación entre <span class="math inline">\(n_d \times Rd\)</span> y el logaritmo de la varianza. Finalmente, el cuarto gráfico (<code>p4</code>) representa la relación entre la raíz cuadrada de la estimación directa y el logaritmo de la varianza.</p>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb161-1"><a href="función-generalizada-de-varianza.html#cb161-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(patchwork)</span>
+<span id="cb161-2"><a href="función-generalizada-de-varianza.html#cb161-2" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(baseFGV, <span class="fu">aes</span>(<span class="at">x =</span> Rd, <span class="at">y =</span> ln_sigma2)) <span class="sc">+</span></span>
+<span id="cb161-3"><a href="función-generalizada-de-varianza.html#cb161-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb161-4"><a href="función-generalizada-de-varianza.html#cb161-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;loess&quot;</span>) <span class="sc">+</span></span>
+<span id="cb161-5"><a href="función-generalizada-de-varianza.html#cb161-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Formal&quot;</span>)</span>
+<span id="cb161-6"><a href="función-generalizada-de-varianza.html#cb161-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb161-7"><a href="función-generalizada-de-varianza.html#cb161-7" aria-hidden="true" tabindex="-1"></a>p2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(baseFGV, <span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> ln_sigma2)) <span class="sc">+</span> </span>
+<span id="cb161-8"><a href="función-generalizada-de-varianza.html#cb161-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb161-9"><a href="función-generalizada-de-varianza.html#cb161-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;loess&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb161-10"><a href="función-generalizada-de-varianza.html#cb161-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Tamaño de muestra&quot;</span>)</span>
+<span id="cb161-11"><a href="función-generalizada-de-varianza.html#cb161-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb161-12"><a href="función-generalizada-de-varianza.html#cb161-12" aria-hidden="true" tabindex="-1"></a>p3 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(baseFGV, </span>
+<span id="cb161-13"><a href="función-generalizada-de-varianza.html#cb161-13" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> Rd <span class="sc">*</span> n, <span class="at">y =</span> ln_sigma2)) <span class="sc">+</span> </span>
+<span id="cb161-14"><a href="función-generalizada-de-varianza.html#cb161-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb161-15"><a href="función-generalizada-de-varianza.html#cb161-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;loess&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb161-16"><a href="función-generalizada-de-varianza.html#cb161-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Número de Formales&quot;</span>)</span>
+<span id="cb161-17"><a href="función-generalizada-de-varianza.html#cb161-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb161-18"><a href="función-generalizada-de-varianza.html#cb161-18" aria-hidden="true" tabindex="-1"></a>p4 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(baseFGV, </span>
+<span id="cb161-19"><a href="función-generalizada-de-varianza.html#cb161-19" aria-hidden="true" tabindex="-1"></a>             <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">sqrt</span>(Rd), <span class="at">y =</span> ln_sigma2)) <span class="sc">+</span> </span>
+<span id="cb161-20"><a href="función-generalizada-de-varianza.html#cb161-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb161-21"><a href="función-generalizada-de-varianza.html#cb161-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;loess&quot;</span>) <span class="sc">+</span> </span>
+<span id="cb161-22"><a href="función-generalizada-de-varianza.html#cb161-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Raiz cuadrada de tasa de formalidad&quot;</span>)</span>
+<span id="cb161-23"><a href="función-generalizada-de-varianza.html#cb161-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb161-24"><a href="función-generalizada-de-varianza.html#cb161-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb161-25"><a href="función-generalizada-de-varianza.html#cb161-25" aria-hidden="true" tabindex="-1"></a>(p1 <span class="sc">|</span> p2) <span class="sc">/</span> (p3 <span class="sc">|</span> p4)</span></code></pre></div>
+<p><img src="08-D3S3_Mercado_de_trabajo_files/figure-html/unnamed-chunk-7-1.svg" width="672" /></p>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb162-1"><a href="función-generalizada-de-varianza.html#cb162-1" aria-hidden="true" tabindex="-1"></a><span class="fu">rm</span>(<span class="st">&#39;p1&#39;</span>,<span class="st">&#39;p2&#39;</span>,<span class="st">&#39;p3&#39;</span>,<span class="st">&#39;p4&#39;</span>)</span></code></pre></div>
+</div>
+<div id="ajustando-el-modelo-log-lineal-de-la-varianza" class="section level3 hasAnchor" number="10.2.2">
+<h3><span class="header-section-number">10.2.2</span> Ajustando el modelo log-lineal de la varianza<a href="función-generalizada-de-varianza.html#ajustando-el-modelo-log-lineal-de-la-varianza" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>El código ajusta un modelo de regresión lineal múltiple (utilizando la función <code>lm()</code>), donde <code>ln_sigma2</code> es la variable respuesta y las variables predictoras son <code>Rd</code>, <code>n</code>, y varias transformaciones de éstas. El objetivo de este modelo es estimar la función generalizada de varianza (FGV) para los dominios observados.</p>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb163-1"><a href="función-generalizada-de-varianza.html#cb163-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(gtsummary)</span>
+<span id="cb163-2"><a href="función-generalizada-de-varianza.html#cb163-2" aria-hidden="true" tabindex="-1"></a>FGV1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(ln_sigma2 <span class="sc">~</span> <span class="dv">1</span> <span class="sc">+</span> Rd <span class="sc">+</span> </span>
+<span id="cb163-3"><a href="función-generalizada-de-varianza.html#cb163-3" aria-hidden="true" tabindex="-1"></a>             n <span class="sc">+</span> <span class="fu">I</span>(n <span class="sc">^</span> <span class="dv">2</span>) <span class="sc">+</span> <span class="fu">I</span>(Rd <span class="sc">*</span> n) <span class="sc">+</span></span>
+<span id="cb163-4"><a href="función-generalizada-de-varianza.html#cb163-4" aria-hidden="true" tabindex="-1"></a>             <span class="fu">I</span>(<span class="fu">sqrt</span>(Rd)) <span class="sc">+</span> <span class="fu">I</span>(<span class="fu">sqrt</span>(n)) <span class="sc">+</span> </span>
+<span id="cb163-5"><a href="función-generalizada-de-varianza.html#cb163-5" aria-hidden="true" tabindex="-1"></a>             <span class="fu">I</span>(<span class="fu">sqrt</span>(Rd <span class="sc">*</span> n)) ,</span>
+<span id="cb163-6"><a href="función-generalizada-de-varianza.html#cb163-6" aria-hidden="true" tabindex="-1"></a>           <span class="at">data =</span> baseFGV)</span>
+<span id="cb163-7"><a href="función-generalizada-de-varianza.html#cb163-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb163-8"><a href="función-generalizada-de-varianza.html#cb163-8" aria-hidden="true" tabindex="-1"></a><span class="fu">tbl_regression</span>(FGV1) <span class="sc">%&gt;%</span> </span>
+<span id="cb163-9"><a href="función-generalizada-de-varianza.html#cb163-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_glance_table</span>(<span class="at">include =</span> <span class="fu">c</span>(r.squared, adj.r.squared))</span></code></pre></div>
+<div id="xfbscqoatx" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>html {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+}
+
+#xfbscqoatx .gt_table {
+  display: table;
+  border-collapse: collapse;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#xfbscqoatx .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#xfbscqoatx .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#xfbscqoatx .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#xfbscqoatx .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#xfbscqoatx .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xfbscqoatx .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#xfbscqoatx .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#xfbscqoatx .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#xfbscqoatx .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#xfbscqoatx .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#xfbscqoatx .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#xfbscqoatx .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#xfbscqoatx .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#xfbscqoatx .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#xfbscqoatx .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#xfbscqoatx .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#xfbscqoatx .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xfbscqoatx .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#xfbscqoatx .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#xfbscqoatx .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xfbscqoatx .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#xfbscqoatx .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#xfbscqoatx .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xfbscqoatx .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xfbscqoatx .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#xfbscqoatx .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#xfbscqoatx .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#xfbscqoatx .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#xfbscqoatx .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xfbscqoatx .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#xfbscqoatx .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#xfbscqoatx .gt_left {
+  text-align: left;
+}
+
+#xfbscqoatx .gt_center {
+  text-align: center;
+}
+
+#xfbscqoatx .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#xfbscqoatx .gt_font_normal {
+  font-weight: normal;
+}
+
+#xfbscqoatx .gt_font_bold {
+  font-weight: bold;
+}
+
+#xfbscqoatx .gt_font_italic {
+  font-style: italic;
+}
+
+#xfbscqoatx .gt_super {
+  font-size: 65%;
+}
+
+#xfbscqoatx .gt_footnote_marks {
+  font-style: italic;
+  font-weight: normal;
+  font-size: 75%;
+  vertical-align: 0.4em;
+}
+
+#xfbscqoatx .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#xfbscqoatx .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#xfbscqoatx .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#xfbscqoatx .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#xfbscqoatx .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#xfbscqoatx .gt_indent_5 {
+  text-indent: 25px;
+}
+</style>
+<table class="gt_table">
+  
+  <thead class="gt_col_headings">
+    <tr>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="&lt;strong&gt;Characteristic&lt;/strong&gt;"><strong>Characteristic</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="&lt;strong&gt;Beta&lt;/strong&gt;"><strong>Beta</strong></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="&lt;strong&gt;95% CI&lt;/strong&gt;&lt;sup class=&quot;gt_footnote_marks&quot;&gt;1&lt;/sup&gt;"><strong>95% CI</strong><sup class="gt_footnote_marks">1</sup></th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="&lt;strong&gt;p-value&lt;/strong&gt;"><strong>p-value</strong></th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="label" class="gt_row gt_left">Rd</td>
+<td headers="estimate" class="gt_row gt_center">-22</td>
+<td headers="ci" class="gt_row gt_center">-50, 5.8</td>
+<td headers="p.value" class="gt_row gt_center">0.12</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">n</td>
+<td headers="estimate" class="gt_row gt_center">-0.01</td>
+<td headers="ci" class="gt_row gt_center">-0.03, 0.01</td>
+<td headers="p.value" class="gt_row gt_center">0.3</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">I(n^2)</td>
+<td headers="estimate" class="gt_row gt_center">0.00</td>
+<td headers="ci" class="gt_row gt_center">0.00, 0.00</td>
+<td headers="p.value" class="gt_row gt_center">0.5</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">I(Rd * n)</td>
+<td headers="estimate" class="gt_row gt_center">0.02</td>
+<td headers="ci" class="gt_row gt_center">-0.01, 0.05</td>
+<td headers="p.value" class="gt_row gt_center">0.2</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">I(sqrt(Rd))</td>
+<td headers="estimate" class="gt_row gt_center">45</td>
+<td headers="ci" class="gt_row gt_center">-4.7, 94</td>
+<td headers="p.value" class="gt_row gt_center">0.076</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">I(sqrt(n))</td>
+<td headers="estimate" class="gt_row gt_center">0.87</td>
+<td headers="ci" class="gt_row gt_center">-0.48, 2.2</td>
+<td headers="p.value" class="gt_row gt_center">0.2</td></tr>
+    <tr><td headers="label" class="gt_row gt_left">I(sqrt(Rd * n))</td>
+<td headers="estimate" class="gt_row gt_center">-1.4</td>
+<td headers="ci" class="gt_row gt_center">-3.1, 0.34</td>
+<td headers="p.value" class="gt_row gt_center">0.11</td></tr>
+    <tr><td headers="label" class="gt_row gt_left" style="border-top-width: 2px; border-top-style: solid; border-top-color: #D3D3D3;">R²</td>
+<td headers="estimate" class="gt_row gt_center" style="border-top-width: 2px; border-top-style: solid; border-top-color: #D3D3D3;">0.683</td>
+<td headers="ci" class="gt_row gt_center" style="border-top-width: 2px; border-top-style: solid; border-top-color: #D3D3D3;"></td>
+<td headers="p.value" class="gt_row gt_center" style="border-top-width: 2px; border-top-style: solid; border-top-color: #D3D3D3;"></td></tr>
+    <tr><td headers="label" class="gt_row gt_left">Adjusted R²</td>
+<td headers="estimate" class="gt_row gt_center">0.656</td>
+<td headers="ci" class="gt_row gt_center"></td>
+<td headers="p.value" class="gt_row gt_center"></td></tr>
+  </tbody>
+  
+  <tfoot class="gt_footnotes">
+    <tr>
+      <td class="gt_footnote" colspan="4"><sup class="gt_footnote_marks">1</sup> CI = Confidence Interval</td>
+    </tr>
+  </tfoot>
+</table>
+</div>
+<p>Después de tener la estimación del modelo se debe obtener el valor de la constante <span class="math inline">\(\Delta\)</span> para lo cual se usa el siguiente código.</p>
+<div class="sourceCode" id="cb164"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb164-1"><a href="función-generalizada-de-varianza.html#cb164-1" aria-hidden="true" tabindex="-1"></a>delta.hat <span class="ot">=</span> <span class="fu">sum</span>(baseFGV<span class="sc">$</span>Rd_var) <span class="sc">/</span> <span class="fu">sum</span>(<span class="fu">exp</span>(<span class="fu">fitted.values</span>(FGV1)))</span></code></pre></div>
+<p>De donde se obtiene que <span class="math inline">\(\Delta = 1.2364739\)</span>. Final es posible obtener la varianza suavizada ejecutando el siguiente comando.</p>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb165-1"><a href="función-generalizada-de-varianza.html#cb165-1" aria-hidden="true" tabindex="-1"></a>baseFGV <span class="ot">&lt;-</span></span>
+<span id="cb165-2"><a href="función-generalizada-de-varianza.html#cb165-2" aria-hidden="true" tabindex="-1"></a>  baseFGV <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">hat_var =</span> delta.hat <span class="sc">*</span> <span class="fu">exp</span>(<span class="fu">fitted.values</span>(FGV1)))</span></code></pre></div>
+</div>
+<div id="validaciones-sobre-el-modelo" class="section level3 hasAnchor" number="10.2.3">
+<h3><span class="header-section-number">10.2.3</span> Validaciones sobre el modelo<a href="función-generalizada-de-varianza.html#validaciones-sobre-el-modelo" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb166-1"><a href="función-generalizada-de-varianza.html#cb166-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb166-2"><a href="función-generalizada-de-varianza.html#cb166-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(FGV1)</span></code></pre></div>
+<p><img src="08-D3S3_Mercado_de_trabajo_files/figure-html/unnamed-chunk-11-1.svg" width="672" />
+varianza suavizada Vs varianza estimada</p>
+<div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb167-1"><a href="función-generalizada-de-varianza.html#cb167-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(baseFGV, </span>
+<span id="cb167-2"><a href="función-generalizada-de-varianza.html#cb167-2" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> Rd_var, <span class="at">y =</span> hat_var)) <span class="sc">+</span> </span>
+<span id="cb167-3"><a href="función-generalizada-de-varianza.html#cb167-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb167-4"><a href="función-generalizada-de-varianza.html#cb167-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;loess&quot;</span>)</span></code></pre></div>
+<p><img src="08-D3S3_Mercado_de_trabajo_files/figure-html/unnamed-chunk-12-1.svg" width="672" /></p>
+<p>Este código está realizando una Consolidación de los dominios observados y no observados para lo cual hace una unión izquierda (<code>left_join()</code>) entre: <code>indicador_dom</code> y <code>baseFGV</code> de la cual selecciona las columnas de <code>id_dominio</code> y <code>hat_var</code>. El argumento <code>by = id_dominio</code> especifica que la unión debe realizarse mediante la columna <code>id_dominio</code>.</p>
+<p>Luego, se utiliza la función <code>mutate()</code> para crear dos nuevas variables. La primera variable <code>Rd_var</code> se asigna el valor de <code>Rd_var</code> de <code>baseFGV</code> si <code>hat_var</code> no es un valor nulo (<code>NA</code>), de lo contrario se le asigna un valor <code>NA_real_</code> (NA pero de tipo numérico). De manera similar, se crea la variable <code>Rd_deff</code> con el valor de <code>Rd_deff</code> de <code>baseFGV</code> si <code>hat_var</code> no es nulo, de lo contrario se le asigna un valor <code>NA_real_</code>.</p>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb168-1"><a href="función-generalizada-de-varianza.html#cb168-1" aria-hidden="true" tabindex="-1"></a>base_sae <span class="ot">&lt;-</span> <span class="fu">left_join</span>(indicador_dom,</span>
+<span id="cb168-2"><a href="función-generalizada-de-varianza.html#cb168-2" aria-hidden="true" tabindex="-1"></a>                      baseFGV <span class="sc">%&gt;%</span> <span class="fu">select</span>(dam2, hat_var), </span>
+<span id="cb168-3"><a href="función-generalizada-de-varianza.html#cb168-3" aria-hidden="true" tabindex="-1"></a>                      <span class="at">by =</span> <span class="st">&quot;dam2&quot;</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb168-4"><a href="función-generalizada-de-varianza.html#cb168-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb168-5"><a href="función-generalizada-de-varianza.html#cb168-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">Rd_var =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(hat_var), <span class="cn">NA_real_</span>, Rd_var),</span>
+<span id="cb168-6"><a href="función-generalizada-de-varianza.html#cb168-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Rd_deff =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(hat_var), <span class="cn">NA_real_</span>, Rd_deff)</span>
+<span id="cb168-7"><a href="función-generalizada-de-varianza.html#cb168-7" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div>
+<p>Ahora, se debe estimar <strong>deff_FGV</strong> y <strong>n_eff_FGV</strong> a parir de la varianza suvizada (<code>hat_var</code>).</p>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb169-1"><a href="función-generalizada-de-varianza.html#cb169-1" aria-hidden="true" tabindex="-1"></a>base_FH <span class="ot">&lt;-</span> base_sae <span class="sc">%&gt;%</span></span>
+<span id="cb169-2"><a href="función-generalizada-de-varianza.html#cb169-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb169-3"><a href="función-generalizada-de-varianza.html#cb169-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">Rd_deff =</span> <span class="fu">ifelse</span>(<span class="fu">is.nan</span>(Rd_deff), <span class="dv">1</span>, Rd_deff),</span>
+<span id="cb169-4"><a href="función-generalizada-de-varianza.html#cb169-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">deff_FGV =</span> <span class="fu">ifelse</span>(Rd_var <span class="sc">==</span> <span class="dv">0</span> ,</span>
+<span id="cb169-5"><a href="función-generalizada-de-varianza.html#cb169-5" aria-hidden="true" tabindex="-1"></a>      <span class="dv">1</span>,</span>
+<span id="cb169-6"><a href="función-generalizada-de-varianza.html#cb169-6" aria-hidden="true" tabindex="-1"></a>      hat_var <span class="sc">/</span> (Rd_var <span class="sc">/</span> Rd_deff) <span class="co">#Fórmula del nuevo DEFF</span></span>
+<span id="cb169-7"><a href="función-generalizada-de-varianza.html#cb169-7" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb169-8"><a href="función-generalizada-de-varianza.html#cb169-8" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Criterio MDS para regularizar el DeffFGV</span></span>
+<span id="cb169-9"><a href="función-generalizada-de-varianza.html#cb169-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">deff_FGV =</span> <span class="fu">ifelse</span>(deff_FGV <span class="sc">&lt;=</span> <span class="dv">1</span>, <span class="cn">NA_real_</span>, deff_FGV), <span class="co">#Deff estimado</span></span>
+<span id="cb169-10"><a href="función-generalizada-de-varianza.html#cb169-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">n_eff_FGV =</span> n <span class="sc">/</span> deff_FGV, <span class="co">#Número efectivo de personas encuestadas</span></span>
+<span id="cb169-11"><a href="función-generalizada-de-varianza.html#cb169-11" aria-hidden="true" tabindex="-1"></a>   <span class="co"># Si no se estimó varianza para ese municipio, también excluir</span></span>
+<span id="cb169-12"><a href="función-generalizada-de-varianza.html#cb169-12" aria-hidden="true" tabindex="-1"></a>   <span class="co"># la estimación directa de este municipio, esto es relevante para el modelo FH  </span></span>
+<span id="cb169-13"><a href="función-generalizada-de-varianza.html#cb169-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">hat_var =</span> <span class="fu">ifelse</span>(deff_FGV <span class="sc">&lt;=</span> <span class="dv">1</span>, <span class="cn">NA_real_</span>, hat_var), </span>
+<span id="cb169-14"><a href="función-generalizada-de-varianza.html#cb169-14" aria-hidden="true" tabindex="-1"></a>    <span class="at">Rd =</span> <span class="fu">ifelse</span>(<span class="fu">is.na</span>(hat_var), <span class="cn">NA_real_</span>, Rd) </span>
+<span id="cb169-15"><a href="función-generalizada-de-varianza.html#cb169-15" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb169-16"><a href="función-generalizada-de-varianza.html#cb169-16" aria-hidden="true" tabindex="-1"></a><span class="fu">tba</span>(<span class="fu">head</span>(base_FH <span class="sc">%&gt;%</span> <span class="fu">select</span>(dam2,n,n_upm,Rd, Rd_var,hat_var<span class="sc">:</span>n_eff_FGV), <span class="dv">10</span>))</span></code></pre></div>
+<table class="table table-striped lightable-classic" style="width: auto !important; margin-left: auto; margin-right: auto; font-family: Arial Narrow; width: auto !important; margin-left: auto; margin-right: auto;">
+<thead>
+<tr>
+<th style="text-align:left;">
+dam2
+</th>
+<th style="text-align:right;">
+n
+</th>
+<th style="text-align:right;">
+n_upm
+</th>
+<th style="text-align:right;">
+Rd
+</th>
+<th style="text-align:right;">
+Rd_var
+</th>
+<th style="text-align:right;">
+hat_var
+</th>
+<th style="text-align:right;">
+deff_FGV
+</th>
+<th style="text-align:right;">
+n_eff_FGV
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+0101
+</td>
+<td style="text-align:right;">
+2951
+</td>
+<td style="text-align:right;">
+126
+</td>
+<td style="text-align:right;">
+0.4147
+</td>
+<td style="text-align:right;">
+0.0005
+</td>
+<td style="text-align:right;">
+0.0005
+</td>
+<td style="text-align:right;">
+5.9862
+</td>
+<td style="text-align:right;">
+492.9681
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3201
+</td>
+<td style="text-align:right;">
+2840
+</td>
+<td style="text-align:right;">
+108
+</td>
+<td style="text-align:right;">
+0.4233
+</td>
+<td style="text-align:right;">
+0.0003
+</td>
+<td style="text-align:right;">
+0.0005
+</td>
+<td style="text-align:right;">
+6.0488
+</td>
+<td style="text-align:right;">
+469.5114
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2501
+</td>
+<td style="text-align:right;">
+3057
+</td>
+<td style="text-align:right;">
+87
+</td>
+<td style="text-align:right;">
+0.4108
+</td>
+<td style="text-align:right;">
+0.0004
+</td>
+<td style="text-align:right;">
+0.0005
+</td>
+<td style="text-align:right;">
+6.2443
+</td>
+<td style="text-align:right;">
+489.5639
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3203
+</td>
+<td style="text-align:right;">
+1944
+</td>
+<td style="text-align:right;">
+59
+</td>
+<td style="text-align:right;">
+0.4858
+</td>
+<td style="text-align:right;">
+0.0004
+</td>
+<td style="text-align:right;">
+0.0006
+</td>
+<td style="text-align:right;">
+5.0816
+</td>
+<td style="text-align:right;">
+382.5577
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3202
+</td>
+<td style="text-align:right;">
+1046
+</td>
+<td style="text-align:right;">
+42
+</td>
+<td style="text-align:right;">
+0.4221
+</td>
+<td style="text-align:right;">
+0.0006
+</td>
+<td style="text-align:right;">
+0.0011
+</td>
+<td style="text-align:right;">
+4.5844
+</td>
+<td style="text-align:right;">
+228.1662
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1101
+</td>
+<td style="text-align:right;">
+1198
+</td>
+<td style="text-align:right;">
+38
+</td>
+<td style="text-align:right;">
+0.3788
+</td>
+<td style="text-align:right;">
+0.0012
+</td>
+<td style="text-align:right;">
+0.0009
+</td>
+<td style="text-align:right;">
+4.7384
+</td>
+<td style="text-align:right;">
+252.8274
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+3206
+</td>
+<td style="text-align:right;">
+836
+</td>
+<td style="text-align:right;">
+32
+</td>
+<td style="text-align:right;">
+0.3968
+</td>
+<td style="text-align:right;">
+0.0006
+</td>
+<td style="text-align:right;">
+0.0015
+</td>
+<td style="text-align:right;">
+5.3642
+</td>
+<td style="text-align:right;">
+155.8470
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+0901
+</td>
+<td style="text-align:right;">
+743
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+0.5236
+</td>
+<td style="text-align:right;">
+0.0028
+</td>
+<td style="text-align:right;">
+0.0013
+</td>
+<td style="text-align:right;">
+3.9091
+</td>
+<td style="text-align:right;">
+190.0700
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+1301
+</td>
+<td style="text-align:right;">
+738
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+0.4899
+</td>
+<td style="text-align:right;">
+0.0011
+</td>
+<td style="text-align:right;">
+0.0014
+</td>
+<td style="text-align:right;">
+4.2704
+</td>
+<td style="text-align:right;">
+172.8174
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+2101
+</td>
+<td style="text-align:right;">
+505
+</td>
+<td style="text-align:right;">
+20
+</td>
+<td style="text-align:right;">
+0.4522
+</td>
+<td style="text-align:right;">
+0.0015
+</td>
+<td style="text-align:right;">
+0.0025
+</td>
+<td style="text-align:right;">
+5.0969
+</td>
+<td style="text-align:right;">
+99.0789
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="otras-validaciones-sobre-el-resultado-del-modelo." class="section level3 hasAnchor" number="10.2.4">
+<h3><span class="header-section-number">10.2.4</span> Otras validaciones sobre el resultado del modelo.<a href="función-generalizada-de-varianza.html#otras-validaciones-sobre-el-resultado-del-modelo." class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Continuando con el proceso de validación se construye el siguiente gráfico de dispersión con la variable de la varianza del estimador directo en el eje <em>y</em> y la varianza FGV en el eje <em>x</em>, para los municipios que tienen valores válidos para ambas variables. La línea de regresión lineal se ajusta a los puntos usando el método de mínimos cuadrados.</p>
+<p>La visualización del gráfico permite evaluar si la FGV está capturando adecuadamente la variabilidad de la variable de interés (en este caso, la variable de varianza del estimador directo). Si la FGV captura la variabilidad, se espera que los puntos estén relativamente cerca de la línea de regresión, lo que indicaría que la FGV explica una gran parte de la variabilidad de la varianza del estimador directo. Por otro lado, si la FGV no captura la variabilidad, los puntos estarán más dispersos y alejados de la línea de regresión.</p>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb170-1"><a href="función-generalizada-de-varianza.html#cb170-1" aria-hidden="true" tabindex="-1"></a>nDom <span class="ot">&lt;-</span> <span class="fu">sum</span>(<span class="sc">!</span><span class="fu">is.na</span>(base_FH<span class="sc">$</span>hat_var))</span>
+<span id="cb170-2"><a href="función-generalizada-de-varianza.html#cb170-2" aria-hidden="true" tabindex="-1"></a>temp_FH <span class="ot">&lt;-</span> base_FH <span class="sc">%&gt;%</span> <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(hat_var))</span>
+<span id="cb170-3"><a href="función-generalizada-de-varianza.html#cb170-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb170-4"><a href="función-generalizada-de-varianza.html#cb170-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(temp_FH <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(n), <span class="fu">aes</span>(<span class="at">x =</span> hat_var, <span class="at">y =</span> Rd_var)) <span class="sc">+</span> </span>
+<span id="cb170-5"><a href="función-generalizada-de-varianza.html#cb170-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb170-6"><a href="función-generalizada-de-varianza.html#cb170-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">&quot;lm&quot;</span>, <span class="at">col =</span> <span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb170-7"><a href="función-generalizada-de-varianza.html#cb170-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">&quot;FGV&quot;</span>, <span class="at">y =</span> <span class="st">&quot;VaRdirEst&quot;</span>) <span class="sc">+</span></span>
+<span id="cb170-8"><a href="función-generalizada-de-varianza.html#cb170-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Varianza del Estimador Directo&quot;</span>)</span></code></pre></div>
+<p><img src="08-D3S3_Mercado_de_trabajo_files/figure-html/unnamed-chunk-15-1.svg" width="672" /></p>
+<p>Ahora, se realiza la comparación de la variabilidad de la varianza del estimador directo frente a la varianza suavizada a medida que el tamaño de muestra aumenta. El eje <em>x</em> representa el tamaño de la muestra y el eje <em>y</em> representa las varianzas. La línea azul representa la varianza FGV, mientras que la línea roja representa la varianza del estimador directo. En el gráfica es posible notar que la varianza FGV tiene una menos volatilidad que la varianza directa.</p>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb171-1"><a href="función-generalizada-de-varianza.html#cb171-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(temp_FH <span class="sc">%&gt;%</span> </span>
+<span id="cb171-2"><a href="función-generalizada-de-varianza.html#cb171-2" aria-hidden="true" tabindex="-1"></a>         <span class="fu">arrange</span>(n), <span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span>nDom)) <span class="sc">+</span></span>
+<span id="cb171-3"><a href="función-generalizada-de-varianza.html#cb171-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> Rd_var, <span class="at">color =</span> <span class="st">&quot;VarDirEst&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb171-4"><a href="función-generalizada-de-varianza.html#cb171-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> hat_var, <span class="at">color =</span> <span class="st">&quot;FGV&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb171-5"><a href="función-generalizada-de-varianza.html#cb171-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Varianzas&quot;</span>, <span class="at">x =</span> <span class="st">&quot;Tamaño muestral&quot;</span>, <span class="at">color =</span> <span class="st">&quot; &quot;</span>) <span class="sc">+</span></span>
+<span id="cb171-6"><a href="función-generalizada-de-varianza.html#cb171-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1</span>, nDom, <span class="at">by =</span> <span class="dv">10</span>),</span>
+<span id="cb171-7"><a href="función-generalizada-de-varianza.html#cb171-7" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> temp_FH<span class="sc">$</span>n[<span class="fu">order</span>(temp_FH<span class="sc">$</span>n)][<span class="fu">seq</span>(<span class="dv">1</span>, nDom, <span class="at">by =</span> <span class="dv">10</span>)]) <span class="sc">+</span></span>
+<span id="cb171-8"><a href="función-generalizada-de-varianza.html#cb171-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;FGV&quot;</span> <span class="ot">=</span> <span class="st">&quot;Blue&quot;</span>, <span class="st">&quot;VarDirEst&quot;</span> <span class="ot">=</span> <span class="st">&quot;Red&quot;</span>))</span></code></pre></div>
+<p><img src="08-D3S3_Mercado_de_trabajo_files/figure-html/unnamed-chunk-16-1.svg" width="672" /></p>
+<p>Siguiendo en la misma línea, se realiza la comparación del efectivo directo (n_eff_DIR) y el efectivo FGV (n_eff_DIR). El código que se muestra a continuación produce un gráfico que compara el tamaño de muestra efectivo obtenido a través de la estimación del DEFF con el tamaño de muestra directo. En el eje x se muestra el tamaño de muestra directo (n) y en el eje y se muestra el tamaño de muestra efectivo, calculado a través de la fórmula n/DEFF para la estimación directa (en rojo) y para la FGV (en azul).</p>
+<p>Se puede observar que, en general, el tamaño de muestra efectivo estimado a través de la FGV es menos variable que el estimado a través de la estimación directa, lo que indica que la FGV reduce la varianza de la estimación. Además, se puede observar que para algunos dominios, el tamaño de muestra efectivo estimado a través de la FGV es menor que el tamaño de muestra directo, lo que podría deberse a la estimación de la varianza a través de la FGV. En general, este gráfico es útil para comparar la eficiencia de la estimación a través de la FGV y la estimación directa para cada dominio.</p>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb172-1"><a href="función-generalizada-de-varianza.html#cb172-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(temp_FH <span class="sc">%&gt;%</span></span>
+<span id="cb172-2"><a href="función-generalizada-de-varianza.html#cb172-2" aria-hidden="true" tabindex="-1"></a>         <span class="fu">arrange</span>(n), <span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span>nDom)) <span class="sc">+</span></span>
+<span id="cb172-3"><a href="función-generalizada-de-varianza.html#cb172-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span>  n <span class="sc">/</span> Rd_deff, <span class="at">color =</span> <span class="st">&quot;n_eff_DIR&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb172-4"><a href="función-generalizada-de-varianza.html#cb172-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> n_eff_FGV, <span class="at">color =</span> <span class="st">&quot;n_eff_FGV&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb172-5"><a href="función-generalizada-de-varianza.html#cb172-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;Tamaño de muestra efectivo&quot;</span>,</span>
+<span id="cb172-6"><a href="función-generalizada-de-varianza.html#cb172-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">&quot;Tamaño muestral&quot;</span>, <span class="at">color =</span> <span class="st">&quot; &quot;</span>) <span class="sc">+</span></span>
+<span id="cb172-7"><a href="función-generalizada-de-varianza.html#cb172-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1</span>, nDom, <span class="at">by =</span> <span class="dv">10</span>),</span>
+<span id="cb172-8"><a href="función-generalizada-de-varianza.html#cb172-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> temp_FH<span class="sc">$</span>n[<span class="fu">order</span>(temp_FH<span class="sc">$</span>n)][<span class="fu">seq</span>(<span class="dv">1</span>, nDom, <span class="at">by =</span> <span class="dv">10</span>)]) <span class="sc">+</span></span>
+<span id="cb172-9"><a href="función-generalizada-de-varianza.html#cb172-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;n_eff_FGV&quot;</span> <span class="ot">=</span> <span class="st">&quot;Blue&quot;</span>, <span class="st">&quot;n_eff_DIR&quot;</span> <span class="ot">=</span> <span class="st">&quot;red&quot;</span>))</span></code></pre></div>
+<p><img src="08-D3S3_Mercado_de_trabajo_files/figure-html/unnamed-chunk-17-1.svg" width="672" /></p>
+<p>Por último, guardamos la base resultante.</p>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb173-1"><a href="función-generalizada-de-varianza.html#cb173-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(<span class="at">object =</span> base_FH, <span class="st">&quot;Recursos/Día3/Sesion3/Data/base_FH.Rds&quot;</span>)</span></code></pre></div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="estimaciones-directas..html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="estimación-de-la-informalidad-laboral-con-un-modelo-de-área-con-tranformación-arcoseno..html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": true,
+"facebook": false,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": "https://github.com/psirusteam/2021ASDA/08-D3S3_Mercado_de_trabajo.qmd",
+"text": "Edit"
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": ["Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas.pdf", "Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas.epub", "Desagregación de datos en encuestas de hogares: metodologías bayesianas para modelos de estimación en áreas pequeñas.mobi"],
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "section"
+},
+"tconfig": null
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

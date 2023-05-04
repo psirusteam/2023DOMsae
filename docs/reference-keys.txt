@@ -63,3 +63,17 @@ preparando-los-insumos-para-stan-3
 resultados-del-modelo-para-los-dominios-observados.-3
 mapa-de-pobreza-3
 mapa-del-coeficiente-de-variación.-2
+día-3---sesión-3--modelos-de-área---estimación-de-la-informalidad-laboral.
+estimaciones-directas.
+calculo-del-indicador
+función-generalizada-de-varianza
+gráficas-exploratorias
+ajustando-el-modelo-log-lineal-de-la-varianza
+validaciones-sobre-el-modelo
+otras-validaciones-sobre-el-resultado-del-modelo.
+estimación-de-la-informalidad-laboral-con-un-modelo-de-área-con-tranformación-arcoseno.
+procedimiento-de-estimación-4
+preparando-los-insumos-para-stan-4
+resultados-del-modelo-para-los-dominios-observados.-4
+mapa-de-informalidad-laboral
+mapa-del-coeficiente-de-variación.-3
