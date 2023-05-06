@@ -2774,13 +2774,21 @@ Mapa_lp <-
     title = "Mapa de pobreza",
     palette = "YlOrRd",
     colorNA = "white"
-  ) + tm_layout(asp = 1.5)
+  ) 
+tmap_save(
+  Mapa_lp,
+ "Recursos/Día2/Sesion3/0Recursos/Mapa_DOM_pobreza_normal.png",
+  width = 2000,
+  height = 1500,
+  asp = 0
+)
+
 
 Mapa_lp
 ```
 
 
-<img src="Recursos/Día2/Sesion3/0Recursos/Mapa_DOM_pobreza_normal.png" width="500px" height="250px" style="display: block; margin: auto;" />
+<img src="Recursos/Día2/Sesion3/0Recursos/Mapa_DOM_pobreza_normal.png" width="900px" height="600px" style="display: block; margin: auto;" />
 
 
 

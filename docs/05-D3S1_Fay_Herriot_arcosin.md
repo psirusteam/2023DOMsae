@@ -494,13 +494,21 @@ Mapa_lp <-
     title = "Mapa de pobreza",
     palette = "YlOrRd",
     colorNA = "white"
-  ) + tm_layout(asp = 2.5)
+  ) 
+  
+tmap_save(
+  Mapa_lp,
+ "Recursos/Día3/Sesion1/0Recursos/Mapa_arcoseno.PNG",
+  width = 2000,
+  height = 1500,
+  asp = 0
+)
 
 Mapa_lp
 ```
 
 
-<img src="Recursos/Día3/Sesion1/0Recursos/Mapa_arcoseno.PNG" width="200%" style="display: block; margin: auto;" />
+<img src="Recursos/Día3/Sesion1/0Recursos/Mapa_arcoseno.PNG" width="900px" height="600px" style="display: block; margin: auto;" />
 
 
 ## Mapa del coeficiente de variación.  
@@ -515,11 +523,19 @@ Mapa_cv <-
      title = "Mapa de pobreza(cv)",
     palette = "YlOrRd",
     colorNA = "white"
-  ) + tm_layout(asp = 2.5)
+  ) 
+
+tmap_save(
+  Mapa_cv,
+  "Recursos/Día3/Sesion1/0Recursos/Mapa_arcoseno_cv.PNG",
+  width = 2000,
+  height = 1500,
+  asp = 0
+)
 
 Mapa_cv
 ```
 
 
-<img src="Recursos/Día3/Sesion1/0Recursos/Mapa_arcoseno_cv.PNG" width="500px" height="250px" style="display: block; margin: auto;" />
+<img src="Recursos/Día3/Sesion1/0Recursos/Mapa_arcoseno_cv.PNG" width="900px" height="600px" style="display: block; margin: auto;" />
 

@@ -130,3 +130,12 @@ estimación-de-los-parámetros.
 estimación-de-la-desviación-estárdar-y-el-coeficiente-de-valiación
 metodología-de-benchmarking
 mapas-del-mercado-de-trabajo.
+día-5---sesión-2---definición-del-modelo-multinomial-de-efectos-aleatorios-correlacionados.
+lectura-de-las-estimaciones-directas
+modelo-programando-en-stan-1
+preparando-insumos-para-stan-1
+validación-del-modelo-1
+estimación-de-los-parámetros.-1
+estimación-del-desviación-estárdar-y-el-coeficiente-de-valiación
+metodología-de-benchmarking-1
+mapas-del-mercado-de-trabajo.-1

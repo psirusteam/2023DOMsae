@@ -487,7 +487,7 @@ data_map <- rbind(data_dir, data_syn) %>%
 
 
 ## Leer Shapefile del país
-ShapeSAE <- read_sf("Shape/DOM_dam2.shp") %>% 
+ShapeSAE <- read_sf("Recursos/Día3/Sesion2/Shape/DOM_dam2.shp") %>% 
    rename(dam2 = id_dominio) %>% 
   mutate(dam2 = str_pad(
                  string = dam2,
@@ -509,10 +509,18 @@ Mapa_lp <-
     colorNA = "white"
   ) + tm_layout(asp = 2.5)
 
+tmap_save(
+  Mapa_lp,
+  "Recursos/Día3/Sesion2/0Recursos/Binomial3.PNG",
+  width = 3000,
+  height = 2000,
+  asp = 0
+)
+
 Mapa_lp
 ```
 
-<img src="Recursos/Día3/Sesion2/0Recursos/Binomial3.PNG" width="400%" style="display: block; margin: auto;" />
+<img src="Recursos/Día3/Sesion2/0Recursos/Binomial3.PNG" width="900px" height="600px" style="display: block; margin: auto;" />
 
 #### Mapa del coeficiente de variación.
 
@@ -526,12 +534,28 @@ Mapa_cv <-
      title = "Mapa de pobreza(cv)",
     palette = "YlOrRd",
     colorNA = "white"
-  ) + tm_layout(asp = 2.5)
+  ) +
+  tm_layout(
+    legend.only = FALSE,
+     legend.height = 0.95,
+     legend.width = 0.95,
+    asp = 0,
+    legend.text.size = 1,
+    legend.title.size = 1
+  )
+
+tmap_save(
+  Mapa_cv,
+  "Recursos/Día3/Sesion2/0Recursos/Binomial3_cv.PNG",
+  width = 3000,
+  height = 2000,
+  asp = 0
+)
 
 Mapa_cv
 ```
 
-<img src="Recursos/Día3/Sesion2/0Recursos/Binomial3_cv.PNG" width="400%" style="display: block; margin: auto;" />
+<img src="Recursos/Día3/Sesion2/0Recursos/Binomial3_cv.PNG" width="900px" height="600px" style="display: block; margin: auto;" />
 
 
 

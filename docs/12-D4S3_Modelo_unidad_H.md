@@ -1306,7 +1306,7 @@ Mapa_ing3
 ```
 
 
-<img src="Recursos/Día4/Sesion3/Data/DOM_H.jpeg" width="1000" height="400%" style="display: block; margin: auto;" />
+<img src="Recursos/Día4/Sesion3/Data/DOM_H.jpeg" width="900px" height="600px" style="display: block; margin: auto;" />
 
 Los resultado para cada componente puede ser mapeado de forma similar. 
 
@@ -1379,4 +1379,4 @@ Para obtener el resultado por municipio procedemos así:
 
 
 
-<img src="Recursos/Día4/Sesion3/Data/NBI_DOM.png" width="1500" height="400%" style="display: block; margin: auto;" />
+<img src="Recursos/Día4/Sesion3/Data/NBI_DOM.png" width="900px" height="600px" style="display: block; margin: auto;" />

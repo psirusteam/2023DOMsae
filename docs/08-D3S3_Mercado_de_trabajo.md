@@ -231,7 +231,7 @@ saveRDS(object = indicador_dom, file = "Recursos/Día3/Sesion3/Data/indicador_do
 
 ## Función Generalizada de Varianza
 
-La Función Generalizada de Varianza (GVF) es una técnica estadística utilizada para suavizar las estimaciones de las varianzas directas de los estimadores. Esta técnica busca estimar la varianza suavizada del estimador directo a través de un modelo log-lineal que involucra un vector de covariables auxiliares. La GVF es particularmente útil para modelar las varianzas de los estimadores directos, ya que permite lidiar con la naturaleza positiva de este parámetro. Además, esta técnica ha sido ampliamente utilizada en la literatura para estimar la varianza de los estimadores directos en diferentes contextos, incluyendo la estimación de ingreso per cápita en los Estados Unidos, cifras oficiales del mercado de trabajo en Canadá y las tasas de pobreza comunal en la región. En este sentido, la GVF se plantea en términos de una relación log-lineal con un vector de covariables auxiliares que puede variar dependiendo del contexto en que se aplique.
+La Función Generalizada de Varianza (FGV) es una técnica estadística utilizada para suavizar las estimaciones de las varianzas directas de los estimadores. Esta técnica busca estimar la varianza suavizada del estimador directo a través de un modelo log-lineal que involucra un vector de covariables auxiliares. La GVF es particularmente útil para modelar las varianzas de los estimadores directos, ya que permite lidiar con la naturaleza positiva de este parámetro. Además, esta técnica ha sido ampliamente utilizada en la literatura para estimar la varianza de los estimadores directos en diferentes contextos, incluyendo la estimación de ingreso per-cápita en los Estados Unidos, cifras oficiales del mercado de trabajo en Canadá y las tasas de pobreza comunal en la región. En este sentido, la GVF se plantea en términos de una relación log-lineal con un vector de covariables auxiliares que puede variar dependiendo del contexto en que se aplique.
 
 El proceso continua con la selección de las dam que posean una varianza estimada mayor que cero, un deff mayor que 1 y 2 o más UPMs. Para los dominios que superan estas condiciones se realiza la transformación $\log(\hat{\sigma}^2_d)$, además se realiza la selección de las columnas identificador del municipio (`id_dominio`), la estimación directa del indicador (`Rd`), El número de personas en el dominio (`n`) y la varianza estimada del para la estimación directa `Rd_var`,siendo esta la que transforma mediante la función `log()`. 
 
@@ -1527,10 +1527,18 @@ Mapa_lp <-
   mapa + tm_polygons(
     c("Rd", "pred_arcoseno"),
     breaks = brks_lp,
-    title = "Mapa de Tasa de informalidad",
+    title = "Mapa de tasa\nde informalidad",
     palette = "YlOrRd",
     colorNA = "white"
   ) + tm_layout(asp = 2.5)
+
+tmap_save(
+  Mapa_lp,
+  "Recursos/Día3/Sesion3/0Recursos/Mapa_arcoseno.PNG",
+  width = 3000,
+  height = 2000,
+  asp = 0
+)
 
 Mapa_lp
 ```
@@ -1548,14 +1556,22 @@ Ahora, se crea un segundo mapa temático (`tmap`) llamado `Mapa_cv`. Utiliza la 
 Mapa_cv <-
   mapa + tm_polygons(
     c("Cv_pred"),
-     title = "Mapa de tasa de informalidad(cv)",
+     title = "Mapa de tasa\nde informalidad(cv)",
     palette = "YlOrRd",
     colorNA = "white"
   ) + tm_layout(asp = 2.5)
+
+tmap_save(
+  Mapa_cv,
+  "Recursos/Día3/Sesion3/0Recursos/Mapa_arcoseno_cv.PNG",
+  width = 3000,
+  height = 2000,
+  asp = 0
+)
 
 Mapa_cv
 ```
 
 
-<img src="Recursos/Día3/Sesion3/0Recursos/Mapa_arcoseno_cv.PNG" width="500px" height="250px" style="display: block; margin: auto;" />
+<img src="Recursos/Día3/Sesion3/0Recursos/Mapa_arcoseno_cv.PNG" width="950px" height="700px" style="display: block; margin: auto;" />
 

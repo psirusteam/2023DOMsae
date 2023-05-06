@@ -996,7 +996,7 @@ abline(a = 0,b=1,col = "red")
 ```
   
 
-<img src="Recursos/Día5/Sesion1/0Recursos/theta_ajustado.png" width="800px" height="200px" style="display: block; margin: auto;" />
+<img src="Recursos/Día5/Sesion1/0Recursos/theta_ajustado.png" width="900px" height="600px" style="display: block; margin: auto;" />
 
   4. Compilando el modelo 
 
@@ -1066,7 +1066,7 @@ ppc_dens_overlay(y = as.numeric(theta_dir$Ocupado), y_pred1)/
 ```
 
 
-<img src="Recursos/Día5/Sesion1/0Recursos/ppc.png" width="800px" height="200px" style="display: block; margin: auto;" />
+<img src="Recursos/Día5/Sesion1/0Recursos/ppc.png" width="900px" height="600px" style="display: block; margin: auto;" />
 
 ## Estimación de los parámetros. 
 
@@ -1988,7 +1988,7 @@ hist(gk_Inactivo)
 ```
 
 
-<img src="Recursos/Día5/Sesion1/0Recursos/Plot_Bench_gk.jpeg" width="800px" height="200px" style="display: block; margin: auto;" />
+<img src="Recursos/Día5/Sesion1/0Recursos/Plot_Bench_gk.jpeg" width="900px" height="600px" style="display: block; margin: auto;" />
 
 
   7.    Estimaciones ajustadas por el ponderador
@@ -2185,7 +2185,7 @@ Mapa_ocupado
 ```
 
 
-<img src="Recursos/Día5/Sesion1/0Recursos/Ocupados.png" width="800px" height="200px" style="display: block; margin: auto;" />
+<img src="Recursos/Día5/Sesion1/0Recursos/Ocupados.png" width="900px" height="600px" style="display: block; margin: auto;" />
 
 ### Desocupado {-} 
 
@@ -2211,7 +2211,7 @@ Mapa_desocupado
 ```
 
 
-<img src="Recursos/Día5/Sesion1/0Recursos/Desocupados.png" width="800px" height="200px" style="display: block; margin: auto;" />
+<img src="Recursos/Día5/Sesion1/0Recursos/Desocupados.png" width="900px" height="600px" style="display: block; margin: auto;" />
 
 
 ### Inactivo {-} 
@@ -2237,7 +2237,7 @@ Mapa_Inactivo <-
 Mapa_Inactivo
 ```
 
-<img src="Recursos/Día5/Sesion1/0Recursos/Inactivo.png" width="800px" height="200px" style="display: block; margin: auto;" />
+<img src="Recursos/Día5/Sesion1/0Recursos/Inactivo.png" width="900px" height="600px" style="display: block; margin: auto;" />
 
     
   
