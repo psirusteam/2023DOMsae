@@ -11,9 +11,10 @@ stringr
 forcats
 lubridate
 patchwork
-gtsummary
-magrittr
 Matrix
-survival
-survey
-srvyr
+lme4
+StanHeaders
+rstan
+Rcpp
+rstanarm
+magrittr

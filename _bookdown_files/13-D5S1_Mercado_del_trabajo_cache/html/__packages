@@ -10,10 +10,14 @@ dplyr
 stringr
 forcats
 lubridate
-patchwork
-gtsummary
-magrittr
 Matrix
 survival
 survey
 srvyr
+magrittr
+TeachingSampling
+haven
+bayesplot
+patchwork
+StanHeaders
+rstan
